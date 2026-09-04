@@ -183,6 +183,20 @@
   document.querySelectorAll(".music-card").forEach(function(el){ revealObserver.observe(el); });
 
   /* ------------------------------------------------------------------
+      4c. bloom flowers open on scroll
+  ------------------------------------------------------------------- */
+  var bloomObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if (en.isIntersecting){
+        en.target.classList.add("bloomed");
+        bloomObserver.unobserve(en.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll(".bloom-flower").forEach(function(el){ bloomObserver.observe(el); });
+
+  /* ------------------------------------------------------------------
      4b. envelope open / close
   ------------------------------------------------------------------- */
   var envelope = document.getElementById("envelope");
@@ -190,7 +204,28 @@
   envelope.addEventListener("click", function(){
     envelopeOpened = !envelopeOpened;
     envelope.classList.toggle("open", envelopeOpened);
+    if (envelopeOpened) burstHearts();
   });
+
+  function burstHearts(){
+    var glyphs = ["♡", "❤", "♥"];
+    for (var i = 0; i < 80; i++){
+      var bh = document.createElement("span");
+      bh.className = "burst-heart";
+      bh.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+      var side = Math.random() < 0.5 ? 1 : -1;
+      var deg = (35 + Math.random() * 40) * Math.PI / 180;
+      var angle = side > 0 ? -deg : -(Math.PI - deg);
+      var dist = 100 + Math.random() * 80;
+      bh.style.setProperty("--hx", Math.cos(angle) * dist + "px");
+      bh.style.setProperty("--hy", Math.sin(angle) * dist + "px");
+      bh.style.setProperty("--hr", (Math.random() * 60 - 30) + "deg");
+      bh.style.fontSize = (14 + Math.random() * 12) + "px";
+      bh.style.animationDelay = (Math.random() * 0.15) + "s";
+      envelope.appendChild(bh);
+      setTimeout(function(){ bh.remove(); }, 1600);
+    }
+  }
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -248,6 +283,31 @@
     }
     setInterval(spawnHeart, 900);
     for (var i = 0; i < 4; i++){ setTimeout(spawnHeart, i * 300); }
+
+    /* ------------------------------------------------------------------
+      6b. falling petals in background
+    ------------------------------------------------------------------- */
+    var petalField = document.getElementById("petal-field");
+    var petalGlyphs = ["🌸", "🌺", "🌼", "🌷", "❀", "✿"];
+    function spawnPetal(){
+      var p = document.createElement("span");
+      p.className = "petal";
+      p.textContent = petalGlyphs[Math.floor(Math.random() * petalGlyphs.length)];
+      var size = 14 + Math.random() * 15;
+      var duration = 10 + Math.random() * 7;
+      var sway = (Math.random() * 170 - 85) + "px";
+      var rot = (Math.random() * 360 - 180) + "deg";
+      p.style.left = (Math.random() * 100) + "vw";
+      p.style.fontSize = size + "px";
+      p.style.animationDuration = duration + "s";
+      p.style.animationDelay = (Math.random() * 2) + "s";
+      p.style.setProperty("--sway", sway);
+      p.style.setProperty("--pr", rot);
+      petalField.appendChild(p);
+      setTimeout(function(){ p.remove(); }, (duration + 3) * 1000);
+    }
+    setInterval(spawnPetal, 700);
+    for (var i = 0; i < 5; i++){ setTimeout(spawnPetal, i * 450); }
   }
 
   /* ------------------------------------------------------------------
