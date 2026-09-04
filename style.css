@@ -353,3 +353,26 @@
     0%{ opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
     100%{ opacity: 0; transform: translateY(30px) scale(0.4) rotate(var(--trail-spin)); }
   }
+
+  /* ---------- floral decorations ---------- */
+  .floral-deco{
+    position: fixed;
+    width: 120px;
+    pointer-events: none;
+    z-index: 0;
+    animation: floral-float 6s ease-in-out infinite;
+  }
+  .floral-deco:nth-child(odd){ animation-duration: 7s; animation-delay: -2s; }
+  .floral-deco:nth-child(3n){ animation-duration: 5.5s; animation-delay: -1s; }
+
+  @keyframes floral-float{
+    0%, 100%{ transform: translateY(0) rotate(0deg); }
+    50%{ transform: translateY(-12px) rotate(3deg); }
+  }
+
+  @media (max-width: 768px){
+    .floral-deco{ width: 70px; opacity: 0.5; }
+  }
+  @media (max-width: 480px){
+    .floral-deco{ width: 50px; opacity: 0.35; }
+  }
