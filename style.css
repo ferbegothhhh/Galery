@@ -180,7 +180,53 @@
   .entry:nth-of-type(6n+3) .card:hover,
   .entry:nth-of-type(6n+5) .card:hover{ transform: translateY(-8px) rotate(0deg); }
 
+  /* ---------- photo strip (horizontal scroll) ---------- */
+  .photo-strip-section{
+    margin-top: 50px;
+    padding-bottom: 20px;
+  }
+  .strip-title{
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    color: var(--rose-deep);
+    text-align: center;
+    margin: 0 0 18px;
+  }
+  .strip-hint{
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    opacity: 0.6;
+    margin-top: 14px;
+  }
+  .photo-strip{
+    display: flex;
+    gap: 22px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 24px 30px;
+  }
+  .photo-strip::-webkit-scrollbar{
+    height: 6px;
+  }
+  .photo-strip::-webkit-scrollbar-track{
+    background: var(--blush-2);
+    border-radius: 3px;
+  }
+  .photo-strip::-webkit-scrollbar-thumb{
+    background: var(--rose);
+    border-radius: 3px;
+  }
+
   /* ---------- polaroid photo slot ---------- */
+  .photo-strip .polaroid{
+    flex-shrink: 0;
+    width: 200px;
+    scroll-snap-align: center;
+  }
   .polaroid{
     background: var(--paper);
     padding: 14px 14px 46px;
@@ -190,16 +236,15 @@
     position: relative;
     transition: transform 0.35s ease, box-shadow 0.35s ease;
   }
+  .polaroid-label{
+    display: block;
+    cursor: pointer;
+  }
   .polaroid:hover{
     transform: translateY(-10px) rotate(0deg) scale(1.03) !important;
     box-shadow: 0 22px 40px var(--shadow-hover);
     z-index: 2;
   }
-  .entry[data-rot="-6"] .polaroid{ transform: rotate(-6deg); }
-  .entry[data-rot="5"]  .polaroid{ transform: rotate(5deg); }
-  .entry[data-rot="-3"] .polaroid{ transform: rotate(-3deg); }
-  .entry[data-rot="4"]  .polaroid{ transform: rotate(4deg); }
-  .entry[data-rot="-4"] .polaroid{ transform: rotate(-4deg); }
 
   .tape{
     position: absolute;
@@ -257,38 +302,9 @@
   .polaroid input[type="file"]{ display: none; }
 
   @media (max-width: 480px){
-    .polaroid{ width: 100%; max-width: 280px; }
+    .photo-strip .polaroid{ width: 170px; }
     header.hero{ padding: 60px 12px 30px; }
     .wrap{ padding: 0 14px 80px; }
-  }
-
-  /* ---------- closing quote ---------- */
-  .closing{
-    margin-top: 60px;
-    text-align: center;
-    padding: 0 10px;
-  }
-  .closing-mark{
-    font-size: 1.4rem;
-    color: var(--rose);
-    display: block;
-    margin-bottom: 10px;
-  }
-  .closing p{
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(1.3rem, 4vw, 1.8rem);
-    color: var(--rose-deep);
-    line-height: 1.55;
-    max-width: 520px;
-    margin: 0 auto;
-  }
-
-  footer.made-with{
-    text-align: center;
-    margin-top: 50px;
-    font-size: 0.75rem;
-    color: var(--ink-soft);
-    opacity: 0.7;
   }
 
   /* ---------- curtain reveal ---------- */

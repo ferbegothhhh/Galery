@@ -26,7 +26,7 @@
     if (musicStarted) return;
     musicStarted = true;
     bgMusic.volume = 0.6;
-    bgMusic.play().catch(function(){});
+    bgMusic.play().catch(function(err){ console.warn("Music play failed:", err); });
   }
 
   curtain.addEventListener("click", function(){ tryPlayMusic(); });
@@ -40,7 +40,7 @@
   });
 
   /* ------------------------------------------------------------------
-     1. content data — pulled straight from skills.md
+     1. content data
   ------------------------------------------------------------------- */
   var skills = [
     { title: "Ahli dalam mengubah hari mendung menjadi cerah",
@@ -62,65 +62,75 @@
     { title: "Desainer utama dari senyum yang paling sering muncul di wajahku",
       desc: "Karyanya konsisten, orisinal, dan tidak pernah gagal menembus hari terburuk sekalipun." },
     { title: "Pemegang rekor sebagai alasan aku ingin pulang lebih cepat",
-      desc: "Tidak peduli seberapa jauh atau seberapa lelah, satu nama ini selalu jadi tujuan." }
+      desc: "Tidak peduli seberapa jauh atau seberapa lelah, satu nama ini selalu jadi tujuan." },
+    { title: "Ahli gizi emosional yang selalu tahu kapan aku butuh camilan hati",
+      desc: "Satu kata manis darimu, lebih menyehatkan dari segala vitamin yang ada." },
+    { title: "Penjaga malam terbaik saat aku sulit tidur karena overthinking",
+      desc: "Selalu ada kata-kata yang membuatku akhirnya bisa menutup mata dengan tenang." },
+    { title: "Arsitek kenangan indah yang sengaja dirancang untuk kita berdua",
+      desc: "Setiap momen kecil bersamamu terasa seperti pameran seni yang tak pernah selesai." },
+    { title: "Dokter spesialis hati yang tidak pernah gagal mendiagnosis masalahku",
+      desc: "Satu senyummu sudah cukup untuk mengobati semua kekhawatiran yang kupunya." },
+    { title: "Penerjemah bahasa tubuh yang paling akurat",
+      desc: "Tahu kapan aku sedang baik-baik saja, dan kapan aku sebenarnya butuh dipeluk tanpa ditanya." },
+    { title: "Ahli fisika quantum dalam menciptakan waktu yang terasa berhenti",
+      desc: "Setiap kali kita bersama, detik-detik berjalan terlalu cepat seolah gravitasi tidak berlaku." },
+    { title: "Programmer jitu yang selalu bisa me-reboot mood burukku",
+      desc: "Satu bug di hari ku, satu hotfix darimu — langsung everything running smooth lagi." },
+    { title: "Chef Michelin star dalam memasak resep kesabaran",
+      desc: "Bahan utamanya waktu, bumbu rahasia nya perhatian — dan hasilnya selalu membuatku merasa berharga." },
+    { title: "Pelukis langit yang mengubah sore biasa jadi momen magis",
+      desc: "Cukup duduk berdua denganmu, dan warna dunia langsung berubah jadi lebih hangat." },
+    { title: "Penulis surat cinta yang tidak pernah kehabisan kata",
+      desc: "Bahkan dalam diam, kamu selalu berhasil menulis puisi terindah di hatiku." }
   ];
 
-  var photoCaptions = ["kita", "senyummu", "hari itu", "favoritku", "selalu"];
-  var rotations = [-6, 5, -3, 4, -4];
-
-  /* interleave: 2 cards, 1 photo, repeating — photo #5 slipped in one slot early
-     so the feed still closes on a written note before the final quote. */
-  var order = [];
-  var photoIdx = 0, skillIdx = 0;
-  var pattern = [2,2,2,2,1,2]; // cards-before-each-photo (last photo comes a little earlier)
-  pattern.forEach(function(count, i){
-    for (var k = 0; k < count && skillIdx < skills.length; k++){
-      order.push({ type: "card", data: skills[skillIdx++] });
-    }
-    if (photoIdx < photoCaptions.length){
-      order.push({ type: "photo", data: { caption: photoCaptions[photoIdx], rot: rotations[photoIdx] } });
-      photoIdx++;
-    }
-  });
-  while (skillIdx < skills.length){
-    order.push({ type: "card", data: skills[skillIdx++] });
-  }
+  var photoCaptions = ["kita", "senyummu", "hari itu", "favoritku", "selalu", "kenangan", "tawa kita", "sore itu", "hariku", "dua"];
+  var rotations = [-6, 5, -3, 4, -4, 6, -5, 3, -4, 5];
 
   /* ------------------------------------------------------------------
-     2. render
+     2. render skill cards (vertical feed)
   ------------------------------------------------------------------- */
   var feed = document.getElementById("feed");
-  var fileCounter = 0;
 
-  order.forEach(function(item, i){
+  skills.forEach(function(skill, i){
     var entry = document.createElement("div");
     entry.className = "entry " + (i % 2 === 0 ? "align-left" : "align-right");
-
-    if (item.type === "card"){
-      entry.innerHTML =
-        '<div class="card">' +
-          '<p class="card-title">' + item.data.title + '</p>' +
-          '<p class="card-desc">' + item.data.desc + '</p>' +
-        '</div>';
-    } else {
-      var inputId = "photo-upload-" + (fileCounter++);
-      entry.setAttribute("data-rot", item.data.rot);
-      entry.innerHTML =
-        '<label class="polaroid" for="' + inputId + '">' +
-          '<span class="tape"></span>' +
-          '<div class="photo-inner">' +
-            '<span class="hint-icon">♡</span>' +
-            '<span class="hint-text">ketuk untuk<br>menambah foto</span>' +
-          '</div>' +
-          '<span class="photo-caption">' + item.data.caption + '</span>' +
-          '<input type="file" id="' + inputId + '" accept="image/*">' +
-        '</label>';
-    }
+    entry.innerHTML =
+      '<div class="card">' +
+        '<p class="card-title">' + skill.title + '</p>' +
+        '<p class="card-desc">' + skill.desc + '</p>' +
+      '</div>';
     feed.appendChild(entry);
   });
 
+  /* ------------------------------------------------------------------
+     3. render photo strip (horizontal scroll)
+  ------------------------------------------------------------------- */
+  var photoStrip = document.getElementById("photoStrip");
+  var fileCounter = 0;
+
+  photoCaptions.forEach(function(caption, i){
+    var inputId = "photo-upload-" + (fileCounter++);
+    var rot = rotations[i % rotations.length];
+    var polaroid = document.createElement("div");
+    polaroid.className = "polaroid";
+    polaroid.style.transform = "rotate(" + rot + "deg)";
+    polaroid.innerHTML =
+      '<label class="polaroid-label" for="' + inputId + '">' +
+        '<span class="tape"></span>' +
+        '<div class="photo-inner">' +
+          '<span class="hint-icon">♡</span>' +
+          '<span class="hint-text">ketuk untuk<br>menambah foto</span>' +
+        '</div>' +
+        '<span class="photo-caption">' + caption + '</span>' +
+        '<input type="file" id="' + inputId + '" accept="image/*">' +
+      '</label>';
+    photoStrip.appendChild(polaroid);
+  });
+
   /* photo upload preview */
-  feed.addEventListener("change", function(e){
+  photoStrip.addEventListener("change", function(e){
     if (e.target.type !== "file" || !e.target.files || !e.target.files[0]) return;
     var reader = new FileReader();
     var photoInner = e.target.closest(".polaroid").querySelector(".photo-inner");
@@ -132,22 +142,22 @@
   });
 
   /* ------------------------------------------------------------------
-     3. scroll reveal (Intersection Observer, staggered)
+     4. scroll reveal (Intersection Observer, staggered)
   ------------------------------------------------------------------- */
-  var revealables = document.querySelectorAll(".entry");
-  var observer = new IntersectionObserver(function(entries){
-    entries.forEach(function(en, idx){
+  var revealObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(en, i){
       if (en.isIntersecting){
-        var delay = (idx % 4) * 90;
+        var delay = (i % 4) * 90;
         setTimeout(function(){ en.target.classList.add("is-visible"); }, delay);
-        observer.unobserve(en.target);
+        revealObserver.unobserve(en.target);
       }
     });
   }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
-  revealables.forEach(function(el){ observer.observe(el); });
+
+  document.querySelectorAll(".entry").forEach(function(el){ revealObserver.observe(el); });
 
   /* ------------------------------------------------------------------
-     4. floating heart particles in background
+     5. floating heart particles in background
   ------------------------------------------------------------------- */
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!reduceMotion){
@@ -173,17 +183,8 @@
     for (var i = 0; i < 4; i++){ setTimeout(spawnHeart, i * 300); }
   }
 
-  /* closing quote reveal too */
-  var closing = document.getElementById("closing-quote");
-  var closeObs = new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if (en.isIntersecting){ en.target.classList.add("is-visible"); closeObs.unobserve(en.target); }
-    });
-  }, { threshold: 0.2 });
-  closeObs.observe(closing);
-
   /* ------------------------------------------------------------------
-     5. cursor heart trail
+     6. cursor heart trail
   ------------------------------------------------------------------- */
   if (!reduceMotion){
     var trailField = document.getElementById("heart-trail");
