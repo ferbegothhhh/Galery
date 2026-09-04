@@ -25,9 +25,11 @@
   body{
     margin: 0;
     background:
+      radial-gradient(circle at 1.5px 1.5px, rgba(207,138,151,0.16) 1.5px, transparent 1.5px),
       radial-gradient(circle at 10% 0%, var(--blush-2) 0%, transparent 45%),
       radial-gradient(circle at 90% 20%, var(--blush) 0%, transparent 40%),
       var(--bg);
+    background-size: 34px 34px, auto, auto, auto;
     color: var(--ink);
     font-family: 'Quicksand', sans-serif;
     overflow-x: hidden;
@@ -118,6 +120,70 @@
     animation: hero-in 0.9s ease-out 0.7s forwards;
   }
 
+  /* ---------- decorative divider ---------- */
+  .divider{
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 18px auto 26px;
+    max-width: 420px;
+    padding: 0 10px;
+  }
+  .divider::before,
+  .divider::after{
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rose));
+  }
+  .divider::after{
+    background: linear-gradient(90deg, var(--rose), transparent);
+  }
+  .divider span{
+    font-size: 0.85rem;
+    color: var(--rose);
+    animation: divider-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes divider-pulse{
+    0%, 100%{ transform: scale(1); opacity: 0.6; }
+    50%{ transform: scale(1.3); opacity: 1; }
+  }
+
+  /* ---------- twinkling sparkles ---------- */
+  #sparkle-field{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .sparkle{
+    position: absolute;
+    color: var(--gold);
+    pointer-events: none;
+    animation: sparkle-twinkle 3s ease-in-out infinite;
+  }
+  @keyframes sparkle-twinkle{
+    0%, 100%{ opacity: 0; transform: scale(0.3) rotate(0deg); }
+    50%{ opacity: 0.85; transform: scale(1) rotate(20deg); }
+  }
+
+  /* ---------- background watermark ---------- */
+  .watermark{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-8deg);
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(2.2rem, 8vw, 5rem);
+    color: var(--rose);
+    opacity: 0.05;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 0;
+    user-select: none;
+  }
+
   /* ---------- scrapbook feed ---------- */
   .feed{
     display: flex;
@@ -130,7 +196,7 @@
     opacity: 0;
     transform: translateY(28px);
     transition: opacity 0.7s ease, transform 0.7s ease;
-    max-width: 88%;
+    max-width: 72%;
   }
   .entry.is-visible{
     opacity: 1;
@@ -140,7 +206,7 @@
   .entry.align-right{ align-self: flex-end; }
 
   @media (max-width: 600px){
-    .entry{ max-width: 100%; align-self: center !important; }
+    .entry{ max-width: 100%; }
   }
 
   /* ---------- skill card ---------- */
@@ -211,17 +277,6 @@
   }
   .photo-strip::-webkit-scrollbar{
     display: none;
-  }
-  .photo-strip::-webkit-scrollbar{
-    height: 6px;
-  }
-  .photo-strip::-webkit-scrollbar-track{
-    background: var(--blush-2);
-    border-radius: 3px;
-  }
-  .photo-strip::-webkit-scrollbar-thumb{
-    background: var(--rose);
-    border-radius: 3px;
   }
 
   /* ---------- polaroid photo slot ---------- */

@@ -154,10 +154,41 @@
 
   document.querySelectorAll(".entry").forEach(function(el){ revealObserver.observe(el); });
 
-  /* ------------------------------------------------------------------
-     5. floating heart particles in background
-  ------------------------------------------------------------------- */
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ------------------------------------------------------------------
+     5. twinkling sparkles in background
+  ------------------------------------------------------------------- */
+  if (!reduceMotion){
+    var sparkleField = document.getElementById("sparkle-field");
+    var sparklePositions = [
+      { left: "8%",   top: "28%" },
+      { left: "90%",  top: "12%" },
+      { left: "75%",  top: "42%" },
+      { left: "12%",  top: "60%" },
+      { left: "85%",  top: "70%" },
+      { left: "20%",  top: "85%" },
+      { left: "65%",  top: "88%" },
+      { left: "5%",   top: "45%" },
+      { left: "94%",  top: "35%" },
+      { left: "40%",  top: "90%" }
+    ];
+    sparklePositions.forEach(function(pos, i){
+      var s = document.createElement("span");
+      s.className = "sparkle";
+      s.textContent = i % 3 === 0 ? "✦" : "✧";
+      s.style.left = pos.left;
+      s.style.top = pos.top;
+      s.style.fontSize = (10 + Math.random() * 10) + "px";
+      s.style.animationDelay = (Math.random() * 3) + "s";
+      s.style.animationDuration = (2.4 + Math.random() * 2) + "s";
+      sparkleField.appendChild(s);
+    });
+  }
+
+  /* ------------------------------------------------------------------
+     6. floating heart particles in background
+  ------------------------------------------------------------------- */
   if (!reduceMotion){
     var field = document.getElementById("heart-field");
     var glyphs = ["♡", "❤", "♥"];
@@ -182,7 +213,7 @@
   }
 
   /* ------------------------------------------------------------------
-     6. cursor heart trail
+     7. cursor heart trail
   ------------------------------------------------------------------- */
   if (!reduceMotion){
     var trailField = document.getElementById("heart-trail");
