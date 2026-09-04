@@ -205,9 +205,12 @@
     gap: 22px;
     overflow-x: auto;
     overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
     padding: 20px 24px 30px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .photo-strip::-webkit-scrollbar{
+    display: none;
   }
   .photo-strip::-webkit-scrollbar{
     height: 6px;

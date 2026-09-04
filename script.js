@@ -52,41 +52,11 @@
     { title: "Spesialis pendengar keluh kesah tanpa pernah terlihat bosan",
       desc: "Cerita yang sama, diulang untuk ketiga kalinya, tetap disambut seolah baru pertama kali didengar." },
     { title: "Master dalam seni membuatku tertawa di waktu yang paling tidak tepat",
-      desc: "Termasuk saat sedang serius, saat sedang marah, dan sekali waktu, saat sedang menangis." },
-    { title: "Ahli strategi dalam memilih kata-kata yang menenangkan",
-      desc: "Tahu persis kapan harus diam, kapan harus memeluk, dan kapan harus bicara." },
-    { title: "Kurator terpercaya untuk playlist lagu di saat yang tepat",
-      desc: "Selalu tahu lagu mana yang cocok untuk suasana hatiku, bahkan sebelum aku sendiri menyadarinya." },
-    { title: "Teknisi andal dalam merapikan kekacauan di kepalaku",
-      desc: "Satu per satu, pelan-pelan, tanpa pernah terburu-buru atau menghakimi." },
-    { title: "Desainer utama dari senyum yang paling sering muncul di wajahku",
-      desc: "Karyanya konsisten, orisinal, dan tidak pernah gagal menembus hari terburuk sekalipun." },
-    { title: "Pemegang rekor sebagai alasan aku ingin pulang lebih cepat",
-      desc: "Tidak peduli seberapa jauh atau seberapa lelah, satu nama ini selalu jadi tujuan." },
-    { title: "Ahli gizi emosional yang selalu tahu kapan aku butuh camilan hati",
-      desc: "Satu kata manis darimu, lebih menyehatkan dari segala vitamin yang ada." },
-    { title: "Penjaga malam terbaik saat aku sulit tidur karena overthinking",
-      desc: "Selalu ada kata-kata yang membuatku akhirnya bisa menutup mata dengan tenang." },
-    { title: "Arsitek kenangan indah yang sengaja dirancang untuk kita berdua",
-      desc: "Setiap momen kecil bersamamu terasa seperti pameran seni yang tak pernah selesai." },
-    { title: "Dokter spesialis hati yang tidak pernah gagal mendiagnosis masalahku",
-      desc: "Satu senyummu sudah cukup untuk mengobati semua kekhawatiran yang kupunya." },
-    { title: "Penerjemah bahasa tubuh yang paling akurat",
-      desc: "Tahu kapan aku sedang baik-baik saja, dan kapan aku sebenarnya butuh dipeluk tanpa ditanya." },
-    { title: "Ahli fisika quantum dalam menciptakan waktu yang terasa berhenti",
-      desc: "Setiap kali kita bersama, detik-detik berjalan terlalu cepat seolah gravitasi tidak berlaku." },
-    { title: "Programmer jitu yang selalu bisa me-reboot mood burukku",
-      desc: "Satu bug di hari ku, satu hotfix darimu — langsung everything running smooth lagi." },
-    { title: "Chef Michelin star dalam memasak resep kesabaran",
-      desc: "Bahan utamanya waktu, bumbu rahasia nya perhatian — dan hasilnya selalu membuatku merasa berharga." },
-    { title: "Pelukis langit yang mengubah sore biasa jadi momen magis",
-      desc: "Cukup duduk berdua denganmu, dan warna dunia langsung berubah jadi lebih hangat." },
-    { title: "Penulis surat cinta yang tidak pernah kehabisan kata",
-      desc: "Bahkan dalam diam, kamu selalu berhasil menulis puisi terindah di hatiku." }
+      desc: "Termasuk saat sedang serius, saat sedang marah, dan sekali waktu, saat sedang menangis." }
   ];
 
-  var photoCaptions = ["kita", "senyummu", "hari itu", "favoritku", "selalu", "kenangan", "tawa kita", "sore itu", "hariku", "dua"];
-  var rotations = [-6, 5, -3, 4, -4, 6, -5, 3, -4, 5];
+  var photoCaptions = ["kita", "senyummu", "hari itu", "favoritku", "selalu"];
+  var rotations = [-6, 5, -3, 4, -4];
 
   /* ------------------------------------------------------------------
      2. render skill cards (vertical feed)
@@ -130,29 +100,32 @@
   });
 
   /* ------------------------------------------------------------------
-     3b. auto-scroll photo strip
+     3b. auto-scroll photo strip (duplicate items for seamless loop)
   ------------------------------------------------------------------- */
+  var originals = photoStrip.innerHTML;
+  photoStrip.innerHTML = originals + originals + originals;
+
   var stripPaused = false;
-  var scrollSpeed = 1;
-  var scrollDir = 1;
+  var stripScrollLeft = 0;
+  var speed = 0.5;
 
   function autoScrollStrip(){
-    if (!stripPaused && photoStrip.scrollWidth > photoStrip.clientWidth){
-      photoStrip.scrollLeft += scrollSpeed * scrollDir;
-      if (photoStrip.scrollLeft + photoStrip.clientWidth >= photoStrip.scrollWidth - 2){
-        scrollDir = -1;
-      } else if (photoStrip.scrollLeft <= 2){
-        scrollDir = 1;
+    if (!stripPaused){
+      stripScrollLeft += speed;
+      var oneSet = photoStrip.scrollWidth / 3;
+      if (stripScrollLeft >= oneSet){
+        stripScrollLeft -= oneSet;
       }
+      photoStrip.scrollLeft = stripScrollLeft;
     }
     requestAnimationFrame(autoScrollStrip);
   }
   requestAnimationFrame(autoScrollStrip);
 
   photoStrip.addEventListener("mouseenter", function(){ stripPaused = true; });
-  photoStrip.addEventListener("mouseleave", function(){ stripPaused = false; });
+  photoStrip.addEventListener("mouseleave", function(){ stripPaused = false; stripScrollLeft = photoStrip.scrollLeft; });
   photoStrip.addEventListener("touchstart", function(){ stripPaused = true; }, { passive: true });
-  photoStrip.addEventListener("touchend", function(){ setTimeout(function(){ stripPaused = false; }, 2000); });
+  photoStrip.addEventListener("touchend", function(){ setTimeout(function(){ stripPaused = false; stripScrollLeft = photoStrip.scrollLeft; }, 1500); });
 
   /* photo upload preview */
   photoStrip.addEventListener("change", function(e){
