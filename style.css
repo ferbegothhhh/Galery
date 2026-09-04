@@ -208,13 +208,6 @@
   }
 
   /* ---------- scrapbook feed ---------- */
-  .feed{
-    display: flex;
-    flex-direction: column;
-    gap: 34px;
-    padding-top: 20px;
-  }
-
   .entry{
     opacity: 0;
     transform: translateY(28px);
@@ -231,43 +224,6 @@
   @media (max-width: 600px){
     .entry{ max-width: 100%; }
   }
-
-  /* ---------- skill card ---------- */
-  .card{
-    background: var(--paper);
-    border-radius: 22px;
-    padding: 26px 28px;
-    box-shadow: 0 10px 26px var(--shadow);
-    border: 1px solid var(--blush);
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-    cursor: default;
-  }
-  .card:hover{
-    transform: translateY(-8px);
-    box-shadow: 0 20px 38px var(--shadow-hover);
-  }
-  .card-title{
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 700;
-    font-size: 1.08rem;
-    color: var(--rose-deep);
-    margin: 0 0 8px;
-    line-height: 1.4;
-  }
-  .card-desc{
-    margin: 0;
-    font-size: 0.92rem;
-    line-height: 1.65;
-    color: var(--ink-soft);
-  }
-
-  /* rotation variety, purely decorative — feels hand-placed */
-  .entry:nth-of-type(6n+1) .card{ transform: rotate(-0.6deg); }
-  .entry:nth-of-type(6n+3) .card{ transform: rotate(0.7deg); }
-  .entry:nth-of-type(6n+5) .card{ transform: rotate(-0.3deg); }
-  .entry:nth-of-type(6n+1) .card:hover,
-  .entry:nth-of-type(6n+3) .card:hover,
-  .entry:nth-of-type(6n+5) .card:hover{ transform: translateY(-8px) rotate(0deg); }
 
   /* ---------- photo strip (horizontal scroll) ---------- */
   .photo-strip-section{

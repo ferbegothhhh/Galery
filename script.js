@@ -42,19 +42,6 @@
   /* ------------------------------------------------------------------
      1. content data
   ------------------------------------------------------------------- */
-  var skills = [
-    { title: "Ahli dalam mengubah hari mendung menjadi cerah",
-      desc: "Cukup dengan satu pesan pendek atau satu tawa di telepon, mendung di kepalaku selalu berhasil sirna." },
-    { title: "Pakar bersertifikat dalam memberikan pelukan terbaik",
-      desc: "Entah ilmu dari mana, tapi pelukannya selalu tahu persis berapa lama aku butuh untuk merasa baik-baik saja lagi." },
-    { title: "Profesional dalam membuatku rindu, bahkan saat masih di sebelahku",
-      desc: "Sebuah paradoks yang belum bisa kujelaskan secara ilmiah sampai hari ini." },
-    { title: "Spesialis pendengar keluh kesah tanpa pernah terlihat bosan",
-      desc: "Cerita yang sama, diulang untuk ketiga kalinya, tetap disambut seolah baru pertama kali didengar." },
-    { title: "Master dalam seni membuatku tertawa di waktu yang paling tidak tepat",
-      desc: "Termasuk saat sedang serius, saat sedang marah, dan sekali waktu, saat sedang menangis." }
-  ];
-
   var photoCaptions = ["kita", "senyummu", "hari itu", "favoritku", "selalu"];
   var rotations = [-6, 5, -3, 4, -4];
 
@@ -68,23 +55,7 @@
   ];
 
   /* ------------------------------------------------------------------
-     2. render skill cards (vertical feed)
-  ------------------------------------------------------------------- */
-  var feed = document.getElementById("feed");
-
-  skills.forEach(function(skill, i){
-    var entry = document.createElement("div");
-    entry.className = "entry " + (i % 2 === 0 ? "align-left" : "align-right");
-    entry.innerHTML =
-      '<div class="card">' +
-        '<p class="card-title">' + skill.title + '</p>' +
-        '<p class="card-desc">' + skill.desc + '</p>' +
-      '</div>';
-    feed.appendChild(entry);
-  });
-
-  /* ------------------------------------------------------------------
-     2b. render playlist
+     2. render playlist
   ------------------------------------------------------------------- */
   var playlistEl = document.getElementById("playlist");
 
