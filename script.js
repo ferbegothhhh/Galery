@@ -58,6 +58,15 @@
   var photoCaptions = ["kita", "senyummu", "hari itu", "favoritku", "selalu"];
   var rotations = [-6, 5, -3, 4, -4];
 
+  var playlist = [
+    { title: "Tough Luck", artist: "Laufey" },
+    { title: "Castle in Hollywood", artist: "Laufey" },
+    { title: "If You Want To", artist: "beabadoobee" },
+    { title: "M", artist: "Anil Emre Daldal" },
+    { title: "ASAP", artist: "NewJeans" },
+    { title: "Am I Bothering You", artist: "Reality Club" }
+  ];
+
   /* ------------------------------------------------------------------
      2. render skill cards (vertical feed)
   ------------------------------------------------------------------- */
@@ -72,6 +81,24 @@
         '<p class="card-desc">' + skill.desc + '</p>' +
       '</div>';
     feed.appendChild(entry);
+  });
+
+  /* ------------------------------------------------------------------
+     2b. render playlist
+  ------------------------------------------------------------------- */
+  var playlistEl = document.getElementById("playlist");
+
+  playlist.forEach(function(song, i){
+    var item = document.createElement("div");
+    item.className = "music-card " + (i % 2 === 0 ? "align-right" : "align-left");
+    item.innerHTML =
+      '<span class="music-icon">♪</span>' +
+      '<div>' +
+        '<p class="music-title">' + song.title + '</p>' +
+        '<p class="music-artist">' + song.artist + '</p>' +
+      '</div>' +
+      '<span class="music-num">' + (i + 1) + '</span>';
+    playlistEl.appendChild(item);
   });
 
   /* ------------------------------------------------------------------
@@ -150,9 +177,20 @@
         revealObserver.unobserve(en.target);
       }
     });
-  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+  }, { threshold: 0.12, rootMargin: "0px 0px -30px 0px" });
 
   document.querySelectorAll(".entry").forEach(function(el){ revealObserver.observe(el); });
+  document.querySelectorAll(".music-card").forEach(function(el){ revealObserver.observe(el); });
+
+  /* ------------------------------------------------------------------
+     4b. envelope open / close
+  ------------------------------------------------------------------- */
+  var envelope = document.getElementById("envelope");
+  var envelopeOpened = false;
+  envelope.addEventListener("click", function(){
+    envelopeOpened = !envelopeOpened;
+    envelope.classList.toggle("open", envelopeOpened);
+  });
 
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
