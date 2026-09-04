@@ -10,6 +10,28 @@
   }, 1800);
 
   /* ------------------------------------------------------------------
+     0b. background music
+  ------------------------------------------------------------------- */
+  var bgMusic = document.getElementById("bgMusic");
+  var muteBtn = document.getElementById("muteBtn");
+  var savedMute = localStorage.getItem("galeryMuted");
+
+  if (savedMute === "true"){
+    bgMusic.muted = true;
+    muteBtn.textContent = "\uD83D\uDD07";
+  }
+
+  setTimeout(function(){
+    bgMusic.play().catch(function(){});
+  }, 2000);
+
+  muteBtn.addEventListener("click", function(){
+    bgMusic.muted = !bgMusic.muted;
+    muteBtn.textContent = bgMusic.muted ? "\uD83D\uDD07" : "\uD83D\uDD0A";
+    localStorage.setItem("galeryMuted", bgMusic.muted);
+  });
+
+  /* ------------------------------------------------------------------
      1. content data — pulled straight from skills.md
   ------------------------------------------------------------------- */
   var skills = [

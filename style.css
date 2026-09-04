@@ -376,3 +376,32 @@
   @media (max-width: 480px){
     .floral-deco{ width: 50px; opacity: 0.35; }
   }
+
+  /* ---------- mute button ---------- */
+  #muteBtn{
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 80;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid var(--line, rgba(51,36,32,0.16));
+    background: rgba(255,255,255,0.75);
+    backdrop-filter: blur(8px);
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(179,105,122,0.15);
+  }
+  #muteBtn:hover{
+    transform: scale(1.1);
+    background: rgba(255,255,255,0.95);
+    box-shadow: 0 6px 18px rgba(179,105,122,0.25);
+  }
+  #muteBtn:active{
+    transform: scale(0.95);
+  }
