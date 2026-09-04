@@ -1,6 +1,15 @@
 (function(){
 
   /* ------------------------------------------------------------------
+     0. curtain reveal
+  ------------------------------------------------------------------- */
+  var curtain = document.getElementById("curtain");
+  setTimeout(function(){
+    curtain.classList.add("open");
+    setTimeout(function(){ curtain.remove(); }, 1000);
+  }, 1800);
+
+  /* ------------------------------------------------------------------
      1. content data — pulled straight from skills.md
   ------------------------------------------------------------------- */
   var skills = [
@@ -142,5 +151,27 @@
     });
   }, { threshold: 0.2 });
   closeObs.observe(closing);
+
+  /* ------------------------------------------------------------------
+     5. cursor heart trail
+  ------------------------------------------------------------------- */
+  if (!reduceMotion){
+    var trailField = document.getElementById("heart-trail");
+    var trailGlyphs = ["♡", "♥", "❤"];
+    var lastTrail = 0;
+    document.addEventListener("mousemove", function(e){
+      var now = Date.now();
+      if (now - lastTrail < 80) return;
+      lastTrail = now;
+      var h = document.createElement("span");
+      h.className = "trail-heart";
+      h.textContent = trailGlyphs[Math.floor(Math.random() * trailGlyphs.length)];
+      h.style.left = e.clientX + "px";
+      h.style.top = e.clientY + "px";
+      h.style.setProperty("--trail-spin", (Math.random() * 40 - 20) + "deg");
+      trailField.appendChild(h);
+      setTimeout(function(){ h.remove(); }, 900);
+    });
+  }
 
 })();
