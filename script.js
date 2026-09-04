@@ -62,7 +62,7 @@
     { title: "Tough Luck", artist: "Laufey" },
     { title: "Castle in Hollywood", artist: "Laufey" },
     { title: "If You Want To", artist: "beabadoobee" },
-    { title: "M", artist: "Anil Emre Daldal" },
+    { title: "The Perfect Pair", artist: "beabadoobee" },
     { title: "ASAP", artist: "NewJeans" },
     { title: "Am I Bothering You", artist: "Reality Club" }
   ];
