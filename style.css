@@ -1,0 +1,286 @@
+
+  :root{
+    --bg:            #fffaf7;
+    --paper:         #ffffff;
+    --ink:           #4a373c;
+    --ink-soft:      #7d6367;
+    --blush:         #f7dde2;
+    --blush-2:       #fbeff1;
+    --rose:          #cf8a97;
+    --rose-deep:     #b3697a;
+    --gold:          #d8b48c;
+    --tape:          #f1c9bd;
+    --shadow:        rgba(179, 105, 122, 0.18);
+    --shadow-hover:  rgba(179, 105, 122, 0.32);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  *{ box-sizing: border-box; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    margin: 0;
+    background:
+      radial-gradient(circle at 10% 0%, var(--blush-2) 0%, transparent 45%),
+      radial-gradient(circle at 90% 20%, var(--blush) 0%, transparent 40%),
+      var(--bg);
+    color: var(--ink);
+    font-family: 'Quicksand', sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  /* ---------- floating heart particles ---------- */
+  #heart-field{
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+  }
+  .floating-heart{
+    position: absolute;
+    bottom: -40px;
+    color: var(--rose);
+    opacity: 0.55;
+    will-change: transform, opacity;
+    animation-name: float-up;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+  }
+  @keyframes float-up{
+    0%   { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.55; }
+    100% { transform: translate(var(--drift), -115vh) rotate(var(--spin)); opacity: 0; }
+  }
+
+  /* ---------- layout shell ---------- */
+  .wrap{
+    position: relative;
+    z-index: 1;
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 20px 120px;
+  }
+
+  header.hero{
+    text-align: center;
+    padding: 90px 12px 40px;
+  }
+
+  .eyebrow-heart{
+    font-size: 1.6rem;
+    color: var(--rose);
+    opacity: 0;
+    animation: hero-in 0.9s ease-out 0.1s forwards;
+  }
+
+  h1{
+    font-family: 'Dancing Script', cursive;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 7vw, 4.4rem);
+    line-height: 1.15;
+    margin: 8px 0 6px;
+    color: var(--rose-deep);
+    opacity: 0;
+    transform: scale(0.85);
+    animation: hero-in 0.9s cubic-bezier(.2,.9,.3,1.2) 0.25s forwards;
+    outline: none;
+  }
+  h1[contenteditable="true"]:focus{
+    border-bottom: 2px dashed var(--rose);
+  }
+
+  .hero-sub{
+    font-size: 0.98rem;
+    color: var(--ink-soft);
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+    opacity: 0;
+    animation: hero-in 0.9s ease-out 0.5s forwards;
+  }
+
+  @keyframes hero-in{
+    from{ opacity: 0; transform: translateY(14px) scale(0.92); }
+    to{ opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .hero-note{
+    margin-top: 18px;
+    font-size: 0.78rem;
+    color: var(--ink-soft);
+    opacity: 0;
+    animation: hero-in 0.9s ease-out 0.7s forwards;
+  }
+
+  /* ---------- scrapbook feed ---------- */
+  .feed{
+    display: flex;
+    flex-direction: column;
+    gap: 34px;
+    padding-top: 20px;
+  }
+
+  .entry{
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+    max-width: 88%;
+  }
+  .entry.is-visible{
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .entry.align-left{ align-self: flex-start; }
+  .entry.align-right{ align-self: flex-end; }
+
+  @media (max-width: 600px){
+    .entry{ max-width: 100%; align-self: center !important; }
+  }
+
+  /* ---------- skill card ---------- */
+  .card{
+    background: var(--paper);
+    border-radius: 22px;
+    padding: 26px 28px;
+    box-shadow: 0 10px 26px var(--shadow);
+    border: 1px solid var(--blush);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    cursor: default;
+  }
+  .card:hover{
+    transform: translateY(-8px);
+    box-shadow: 0 20px 38px var(--shadow-hover);
+  }
+  .card-title{
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 1.08rem;
+    color: var(--rose-deep);
+    margin: 0 0 8px;
+    line-height: 1.4;
+  }
+  .card-desc{
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  /* rotation variety, purely decorative — feels hand-placed */
+  .entry:nth-of-type(6n+1) .card{ transform: rotate(-0.6deg); }
+  .entry:nth-of-type(6n+3) .card{ transform: rotate(0.7deg); }
+  .entry:nth-of-type(6n+5) .card{ transform: rotate(-0.3deg); }
+  .entry:nth-of-type(6n+1) .card:hover,
+  .entry:nth-of-type(6n+3) .card:hover,
+  .entry:nth-of-type(6n+5) .card:hover{ transform: translateY(-8px) rotate(0deg); }
+
+  /* ---------- polaroid photo slot ---------- */
+  .polaroid{
+    background: var(--paper);
+    padding: 14px 14px 46px;
+    border-radius: 4px;
+    box-shadow: 0 12px 24px var(--shadow);
+    width: 230px;
+    position: relative;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .polaroid:hover{
+    transform: translateY(-10px) rotate(0deg) scale(1.03) !important;
+    box-shadow: 0 22px 40px var(--shadow-hover);
+    z-index: 2;
+  }
+  .entry[data-rot="-6"] .polaroid{ transform: rotate(-6deg); }
+  .entry[data-rot="5"]  .polaroid{ transform: rotate(5deg); }
+  .entry[data-rot="-3"] .polaroid{ transform: rotate(-3deg); }
+  .entry[data-rot="4"]  .polaroid{ transform: rotate(4deg); }
+  .entry[data-rot="-4"] .polaroid{ transform: rotate(-4deg); }
+
+  .tape{
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 64px;
+    height: 22px;
+    background: var(--tape);
+    opacity: 0.85;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+  }
+
+  .photo-inner{
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background: linear-gradient(135deg, var(--blush-2), var(--blush));
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .photo-inner .hint-icon{
+    font-size: 1.6rem;
+    color: var(--rose);
+    opacity: 0.7;
+  }
+  .photo-inner .hint-text{
+    font-size: 0.7rem;
+    color: var(--rose-deep);
+    opacity: 0.75;
+    text-align: center;
+    padding: 0 10px;
+  }
+  .photo-inner.has-image .hint-icon,
+  .photo-inner.has-image .hint-text{
+    display: none;
+  }
+  .photo-caption{
+    position: absolute;
+    bottom: 12px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.15rem;
+    color: var(--rose-deep);
+  }
+  .polaroid input[type="file"]{ display: none; }
+
+  /* ---------- closing quote ---------- */
+  .closing{
+    margin-top: 60px;
+    text-align: center;
+    padding: 0 10px;
+  }
+  .closing-mark{
+    font-size: 1.4rem;
+    color: var(--rose);
+    display: block;
+    margin-bottom: 10px;
+  }
+  .closing p{
+    font-family: 'Dancing Script', cursive;
+    font-size: clamp(1.3rem, 4vw, 1.8rem);
+    color: var(--rose-deep);
+    line-height: 1.55;
+    max-width: 520px;
+    margin: 0 auto;
+  }
+
+  footer.made-with{
+    text-align: center;
+    margin-top: 50px;
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    opacity: 0.7;
+  }
