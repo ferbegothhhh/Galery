@@ -21,11 +21,19 @@
     muteBtn.textContent = "\uD83D\uDD07";
   }
 
-  setTimeout(function(){
+  var musicStarted = false;
+  function tryPlayMusic(){
+    if (musicStarted) return;
+    musicStarted = true;
+    bgMusic.volume = 0.6;
     bgMusic.play().catch(function(){});
-  }, 2000);
+  }
 
-  muteBtn.addEventListener("click", function(){
+  curtain.addEventListener("click", function(){ tryPlayMusic(); });
+  document.addEventListener("click", function(){ tryPlayMusic(); }, { once: true });
+
+  muteBtn.addEventListener("click", function(e){
+    e.stopPropagation();
     bgMusic.muted = !bgMusic.muted;
     muteBtn.textContent = bgMusic.muted ? "\uD83D\uDD07" : "\uD83D\uDD0A";
     localStorage.setItem("galeryMuted", bgMusic.muted);
