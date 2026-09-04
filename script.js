@@ -129,6 +129,31 @@
     photoStrip.appendChild(polaroid);
   });
 
+  /* ------------------------------------------------------------------
+     3b. auto-scroll photo strip
+  ------------------------------------------------------------------- */
+  var stripPaused = false;
+  var scrollSpeed = 1;
+  var scrollDir = 1;
+
+  function autoScrollStrip(){
+    if (!stripPaused && photoStrip.scrollWidth > photoStrip.clientWidth){
+      photoStrip.scrollLeft += scrollSpeed * scrollDir;
+      if (photoStrip.scrollLeft + photoStrip.clientWidth >= photoStrip.scrollWidth - 2){
+        scrollDir = -1;
+      } else if (photoStrip.scrollLeft <= 2){
+        scrollDir = 1;
+      }
+    }
+    requestAnimationFrame(autoScrollStrip);
+  }
+  requestAnimationFrame(autoScrollStrip);
+
+  photoStrip.addEventListener("mouseenter", function(){ stripPaused = true; });
+  photoStrip.addEventListener("mouseleave", function(){ stripPaused = false; });
+  photoStrip.addEventListener("touchstart", function(){ stripPaused = true; }, { passive: true });
+  photoStrip.addEventListener("touchend", function(){ setTimeout(function(){ stripPaused = false; }, 2000); });
+
   /* photo upload preview */
   photoStrip.addEventListener("change", function(e){
     if (e.target.type !== "file" || !e.target.files || !e.target.files[0]) return;
