@@ -256,6 +256,12 @@
   }
   .polaroid input[type="file"]{ display: none; }
 
+  @media (max-width: 480px){
+    .polaroid{ width: 100%; max-width: 280px; }
+    header.hero{ padding: 60px 12px 30px; }
+    .wrap{ padding: 0 14px 80px; }
+  }
+
   /* ---------- closing quote ---------- */
   .closing{
     margin-top: 60px;
