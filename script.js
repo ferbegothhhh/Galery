@@ -137,6 +137,21 @@
     reader.readAsDataURL(e.target.files[0]);
   });
 
+  /* final polaroid upload preview */
+  var finalPolaroid = document.querySelector(".final-polaroid");
+  if (finalPolaroid){
+    finalPolaroid.addEventListener("change", function(e){
+      if (e.target.type !== "file" || !e.target.files || !e.target.files[0]) return;
+      var reader = new FileReader();
+      var photoInner = finalPolaroid.querySelector(".photo-inner");
+      reader.onload = function(ev){
+        photoInner.style.backgroundImage = "url(" + ev.target.result + ")";
+        photoInner.classList.add("has-image");
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    });
+  }
+
   /* ------------------------------------------------------------------
      4. scroll reveal (Intersection Observer, staggered)
   ------------------------------------------------------------------- */

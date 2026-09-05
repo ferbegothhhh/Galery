@@ -543,35 +543,25 @@
     100%{ opacity: 0; transform: translate(var(--hx), var(--hy)) scale(0.1) rotate(var(--hr)); }
   }
 
-  /* ---------- closing quote ---------- */
-  .closing{
-    margin: 40px auto 0;
+  /* ---------- closing polaroid ---------- */
+  .closing-polaroid{
+    margin: 44px 0 10px;
+    display: flex;
+    justify-content: center;
+    max-width: none;
+    width: 100%;
+  }
+  .final-polaroid{
+    width: 320px;
+    padding: 18px 18px 60px;
     text-align: center;
-    max-width: 520px;
-    padding: 0 10px 20px;
   }
-  .closing-mark{
-    font-size: 1.4rem;
-    color: var(--rose);
-    display: block;
-    margin-bottom: 10px;
-    animation: divider-pulse 2.4s ease-in-out infinite;
+  .final-polaroid .photo-caption{
+    font-size: 1.3rem;
+    bottom: 16px;
   }
-  .closing p{
-    font-family: 'Dancing Script', cursive;
-    font-size: clamp(1.3rem, 4vw, 1.8rem);
-    color: var(--rose-deep);
-    line-height: 1.55;
-    max-width: 520px;
-    margin: 0 auto;
-  }
-  .closing-sign{
-    display: block;
-    margin-top: 16px;
-    font-family: 'Handwritten', 'Dancing Script', cursive;
-    font-size: 0.98rem;
-    color: var(--ink-soft);
-    opacity: 0.8;
+  @media (max-width: 480px){
+    .final-polaroid{ width: 270px; }
   }
 
   /* ---------- curtain reveal ---------- */
