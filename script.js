@@ -20,6 +20,7 @@
     bgMusic.muted = true;
     muteBtn.textContent = "\uD83D\uDD07";
   }
+  muteBtn.setAttribute("aria-pressed", bgMusic.muted ? "true" : "false");
 
   var musicStarted = false;
   function tryPlayMusic(){
@@ -30,12 +31,19 @@
   }
 
   curtain.addEventListener("click", function(){ tryPlayMusic(); });
+  curtain.addEventListener("keydown", function(e){
+    if (e.key === "Enter" || e.key === " "){
+      e.preventDefault();
+      tryPlayMusic();
+    }
+  });
   document.addEventListener("click", function(){ tryPlayMusic(); }, { once: true });
 
   muteBtn.addEventListener("click", function(e){
     e.stopPropagation();
     bgMusic.muted = !bgMusic.muted;
     muteBtn.textContent = bgMusic.muted ? "\uD83D\uDD07" : "\uD83D\uDD0A";
+    muteBtn.setAttribute("aria-pressed", bgMusic.muted ? "true" : "false");
     localStorage.setItem("galeryMuted", bgMusic.muted);
   });
 
@@ -262,10 +270,17 @@
   ------------------------------------------------------------------- */
   var envelope = document.getElementById("envelope");
   var envelopeOpened = false;
-  envelope.addEventListener("click", function(){
+  function toggleEnvelope(){
     envelopeOpened = !envelopeOpened;
     envelope.classList.toggle("open", envelopeOpened);
     if (envelopeOpened) burstHearts();
+  }
+  envelope.addEventListener("click", toggleEnvelope);
+  envelope.addEventListener("keydown", function(e){
+    if (e.key === "Enter" || e.key === " "){
+      e.preventDefault();
+      toggleEnvelope();
+    }
   });
 
   function burstHearts(){

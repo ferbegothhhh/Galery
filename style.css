@@ -806,3 +806,9 @@
   #muteBtn:active{
     transform: scale(0.95);
   }
+  .curtain:focus-visible,
+  .envelope:focus-visible,
+  #muteBtn:focus-visible{
+    outline: 3px solid var(--rose);
+    outline-offset: 3px;
+  }

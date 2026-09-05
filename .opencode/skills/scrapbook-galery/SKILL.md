@@ -56,6 +56,38 @@ Structure:
 - When adding a new polaroid field, follow the label+hidden-input pattern so the upload preview handler keeps working.
 - `photos/` is not wired to the DOM; if a static gallery is ever requested, the HTML/JS must load images from that folder explicitly.
 
+## Known limitations & edge cases
+
+- **Uploaded photos are not persisted.** `FileReader` sets `background-image` in memory only — nothing is written to `localStorage`, a server, or disk. A page refresh clears every uploaded photo back to its empty hint state. If persistence is ever requested, this needs an explicit storage layer (e.g. `localStorage` with base64, or an upload endpoint) — don't assume the current pattern survives reload.
+- **Marquee wrap math is width-dependent.** Both strips duplicate their content 2× and reset `scrollLeft` at "half width," so if a polaroid's width, gap, or count changes, the half-width calculation in `script.js` must be updated too or the loop will visibly jump/stutter.
+- **z-index stacking order matters.** Curtain sits above everything; background FX (hearts/petals/sparkles/watermark) must stay `pointer-events: none` and below content, or they'll block clicks on polaroids/envelope/mute button. Check stacking whenever a new fixed/absolute layer is added.
+- **`IntersectionObserver` root margins aren't specified in this doc** — check `script.js` directly before assuming when `.is-visible` fires relative to viewport edges; this affects how "early" the reveal/stagger feels.
+- **Curtain click also starts music** — any new full-screen overlay or click target added early in the page flow should not accidentally intercept or duplicate this first-click handler.
+- **File input reuse across slots** — each `.polaroid` needs a unique input `id`; copy-pasting a slot without renaming the id will make two slots fight over the same file picker.
+
+## Performance & image guidance
+
+- Since photos are visitor-uploaded (not pre-optimized), don't add client-side resizing/compression unless asked — but do warn users in-app (or in captions) if a very large image visibly slows the page.
+- Prefer square or near-square source photos for polaroid slots (`.photo-inner` is cropped via `background-size: cover`); odd aspect ratios will crop unpredictably at the ~190px (mobile ~140px) slot size.
+- Keep `music.mp3` reasonably compressed (looping background track, not a full-quality single) since it loads on first paint alongside the curtain.
+- Background FX (floating hearts, petals, sparkles) should stay CSS-driven (transform/opacity animations), not JS-driven per-frame DOM writes, to avoid jank alongside the marquee's `requestAnimationFrame` loop.
+
+## Accessibility notes
+
+- `prefers-reduced-motion: reduce` is already honored globally — any new animation (new bloom variants, new burst effects, etc.) must also be covered by that clamp, not just the original set.
+- Curtain & envelope divs are interactive via keyboard: `role="button"`, `tabindex="0"`, `aria-label`, and `Enter`/`Space` keydown handlers (share the same handlers as click). The mute button is a native `<button>` with `aria-pressed`. `:focus-visible` outlines are styled in `style.css`. Keep these attributes if you touch those elements.
+- File-input labels (`<label>` wrapping hidden `<input type="file">`) are keyboard-reachable by default — don't replace them with a plain `<div onclick>` or that accessibility is lost.
+- Decorative SVGs (`.floral-deco`, bloom flowers) and background FX elements carry `aria-hidden="true"` — keep it on new decorative layers.
+
+## Quick reference: editing content
+
+- **Playlist entries** — edit the `title`/`artist` array at the top of `script.js`; the grid and `.music-card` reveal stagger will pick up array order automatically.
+- **Photo captions** — edit the `photoCaptions` array (currently 6 entries) at the top of `script.js`; keep it in sync with the number of `.polaroid` slots in the grid.
+- **Adding a new photo slot** — copy an existing `.polaroid` block (label + hidden file input + `.photo-inner` + hint), give the input a new unique `id`, and add a matching caption to `photoCaptions`.
+- **Colors/fonts** — all in the `:root` CSS variables in `style.css`; change tokens there rather than hardcoding new colors inline.
+- **Hero name** — the `h1` text directly in `index.html`'s hero section.
+- **Dedication letter text** — inside the envelope markup in `index.html`; keep it short enough to fit the popped-letter layout at mobile widths.
+
 ## Notes
 
 - Skills/config changes in opencode load on startup — after editing this file, restart opencode for it to take effect.
