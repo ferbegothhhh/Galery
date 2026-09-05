@@ -93,8 +93,14 @@
   }
 
   header.hero{
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    padding: 90px 12px 40px;
+    padding: 90px 12px 80px;
   }
 
   .eyebrow-heart{
@@ -107,7 +113,7 @@
   h1{
     font-family: 'Dancing Script', cursive;
     font-weight: 700;
-    font-size: clamp(2.6rem, 7vw, 4.4rem);
+    font-size: clamp(3.4rem, 12vw, 7rem);
     line-height: 1.15;
     margin: 8px 0 6px;
     color: var(--rose-deep);
@@ -229,6 +235,9 @@
   .photo-strip-section{
     margin-top: 50px;
     padding-bottom: 20px;
+  }
+  .photo-strip-section .strip-title{
+    font-size: clamp(2.2rem, 7vw, 4rem);
   }
   .strip-title{
     font-family: 'Dancing Script', cursive;
