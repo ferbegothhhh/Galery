@@ -42,7 +42,7 @@
   /* ------------------------------------------------------------------
      1. content data
   ------------------------------------------------------------------- */
-  var photoCaptions = ["kita", "senyummu", "hari itu", "favoritku", "selalu"];
+  var photoCaptions = ["kita", "senyummu", "hari itu", "favoritku", "selalu", "kamu"];
   var rotations = [-6, 5, -3, 4, -4];
 
   var playlist = [
@@ -123,6 +123,89 @@
       reader.readAsDataURL(e.target.files[0]);
     });
   }
+
+  /* ------------------------------------------------------------------
+     3b. bottom marquee (two infinite strips: right + left)
+  ------------------------------------------------------------------- */
+  var marqueeCaptions = [
+    [ "kita", "senyummu", "hari itu", "favoritku", "selalu" ],
+    [ "kamu", "rumahku", "rinduku", "cinta", "selalu" ]
+  ];
+  var marqueeRotations = [-5, 4, -3, 5, -4];
+
+  function buildMarquee(stripEl, captions, seedOffset){
+    captions.forEach(function(cap, i){
+      var inputId = "marquee-" + stripEl.id + "-" + i + "-" + seedOffset;
+      var rot = marqueeRotations[(i + seedOffset) % marqueeRotations.length];
+      var polaroid = document.createElement("div");
+      polaroid.className = "polaroid";
+      polaroid.style.transform = "rotate(" + rot + "deg)";
+      polaroid.innerHTML =
+        '<label class="polaroid-label" for="' + inputId + '">' +
+          '<span class="tape"></span>' +
+          '<div class="photo-inner">' +
+            '<span class="hint-icon">♡</span>' +
+            '<span class="hint-text">ketuk untuk<br>menambah foto</span>' +
+          '</div>' +
+          '<span class="photo-caption">' + cap + '</span>' +
+          '<input type="file" id="' + inputId + '" accept="image/*">' +
+        '</label>';
+      stripEl.appendChild(polaroid);
+    });
+  }
+
+  var marqueeRight = document.getElementById("marqueeRight");
+  var marqueeLeft = document.getElementById("marqueeLeft");
+
+  if (marqueeRight){
+    buildMarquee(marqueeRight, marqueeCaptions[0], 0);
+    marqueeRight.innerHTML = marqueeRight.innerHTML + marqueeRight.innerHTML;
+  }
+  if (marqueeLeft){
+    buildMarquee(marqueeLeft, marqueeCaptions[1], 3);
+    marqueeLeft.innerHTML = marqueeLeft.innerHTML + marqueeLeft.innerHTML;
+  }
+
+  function initMarqueeScroll(stripEl, dir){
+    var paused = false;
+    stripEl.addEventListener("mouseenter", function(){ paused = true; });
+    stripEl.addEventListener("mouseleave", function(){ paused = false; });
+    stripEl.addEventListener("touchstart", function(){ paused = true; }, { passive: true });
+    stripEl.addEventListener("touchend", function(){ setTimeout(function(){ paused = false; }, 1500); });
+    function step(){
+      if (!paused){
+        if (dir === "right"){
+          stripEl.scrollLeft -= 0.6;
+          if (stripEl.scrollLeft <= 0){
+            stripEl.scrollLeft += stripEl.scrollWidth / 2;
+          }
+        } else {
+          stripEl.scrollLeft += 0.6;
+          var half = stripEl.scrollWidth / 2;
+          if (stripEl.scrollLeft >= half){
+            stripEl.scrollLeft -= half;
+          }
+        }
+      }
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  if (marqueeRight) initMarqueeScroll(marqueeRight, "right");
+  if (marqueeLeft) initMarqueeScroll(marqueeLeft, "left");
+
+  document.querySelectorAll(".marquee-strip").forEach(function(strip){
+    strip.addEventListener("change", function(e){
+      if (e.target.type !== "file" || !e.target.files || !e.target.files[0]) return;
+      var reader = new FileReader();
+      var photoInner = e.target.closest(".polaroid").querySelector(".photo-inner");
+      reader.onload = function(ev){
+        photoInner.style.backgroundImage = "url(" + ev.target.result + ")";
+        photoInner.classList.add("has-image");
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    });
+  });
 
   /* ------------------------------------------------------------------
      4. scroll reveal (Intersection Observer, staggered)

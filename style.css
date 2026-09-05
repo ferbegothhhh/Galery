@@ -287,6 +287,34 @@
     padding: 8px 0 6px;
   }
 
+  /* ---------- bottom marquee (infinite strips) ---------- */
+  .marquee-section{
+    margin-top: 60px;
+    padding-bottom: 10px;
+  }
+  .marquee-section .strip-title{
+    margin-bottom: 26px;
+  }
+  .marquee-strip{
+    display: flex;
+    gap: 20px;
+    overflow: hidden;
+    padding: 16px 0 24px;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .marquee-strip::-webkit-scrollbar{
+    display: none;
+  }
+  .marquee-strip .polaroid{
+    flex-shrink: 0;
+    width: 180px;
+    margin: 0 2px;
+  }
+  @media (max-width: 480px){
+    .marquee-strip .polaroid{ width: 140px; }
+  }
+
   /* ---------- polaroid photo slot ---------- */
   .photo-strip .polaroid{
     width: 100%;
