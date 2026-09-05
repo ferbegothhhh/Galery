@@ -282,8 +282,7 @@
   }
   .photo-strip{
     display: grid;
-    grid-template-columns: repeat(2, auto);
-    justify-content: center;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 14px;
     padding: 8px 0 6px;
   }
@@ -318,10 +317,7 @@
 
   /* ---------- polaroid photo slot ---------- */
   .photo-strip .polaroid{
-    width: 190px;
-  }
-  @media (max-width: 480px){
-    .photo-strip .polaroid{ width: 140px; }
+    width: 100%;
   }
   .polaroid{
     background: var(--paper);
