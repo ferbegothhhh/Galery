@@ -147,12 +147,32 @@
     entries.forEach(function(en){
       if (en.isIntersecting){
         en.target.classList.add("bloomed");
+        setTimeout(function(){ burstBloom(en.target); }, 500);
         bloomObserver.unobserve(en.target);
       }
     });
   }, { threshold: 0.3 });
 
   document.querySelectorAll(".bloom-flower").forEach(function(el){ bloomObserver.observe(el); });
+
+  function burstBloom(flower){
+    var glyphs = ["✿", "🌸", "✦", "❀", "✧"];
+    for (var i = 0; i < 24; i++){
+      var b = document.createElement("span");
+      b.className = "bloom-burst";
+      b.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+      var angle = Math.random() * Math.PI * 2;
+      var dist = 55 + Math.random() * 85;
+      var spread = dist * 2.3;
+      b.style.setProperty("--bx", (Math.cos(angle) * spread) + "px");
+      b.style.setProperty("--by", (Math.sin(angle) * spread) + "px");
+      b.style.setProperty("--br", (Math.random() * 160 - 80) + "deg");
+      b.style.fontSize = (10 + Math.random() * 10) + "px";
+      b.style.animationDelay = (Math.random() * 0.18) + "s";
+      flower.appendChild(b);
+      setTimeout(function(){ b.remove(); }, 1800);
+    }
+  }
 
   /* ------------------------------------------------------------------
      4b. envelope open / close
