@@ -61,7 +61,7 @@
 
   playlist.forEach(function(song, i){
     var item = document.createElement("div");
-    item.className = "music-card " + (i % 2 === 0 ? "align-right" : "align-left");
+    item.className = "music-card";
     item.innerHTML =
       '<span class="music-icon">♪</span>' +
       '<div>' +
