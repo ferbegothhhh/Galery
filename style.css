@@ -282,8 +282,9 @@
   }
   .photo-strip{
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    gap: 14px;
     padding: 8px 0 6px;
   }
 
@@ -308,16 +309,19 @@
   }
   .marquee-strip .polaroid{
     flex-shrink: 0;
-    width: 180px;
+    width: 230px;
     margin: 0 2px;
   }
   @media (max-width: 480px){
-    .marquee-strip .polaroid{ width: 140px; }
+    .marquee-strip .polaroid{ width: 170px; }
   }
 
   /* ---------- polaroid photo slot ---------- */
   .photo-strip .polaroid{
-    width: 100%;
+    width: 190px;
+  }
+  @media (max-width: 480px){
+    .photo-strip .polaroid{ width: 140px; }
   }
   .polaroid{
     background: var(--paper);
