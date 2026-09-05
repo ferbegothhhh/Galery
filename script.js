@@ -97,34 +97,6 @@
     photoStrip.appendChild(polaroid);
   });
 
-  /* ------------------------------------------------------------------
-     3b. auto-scroll photo strip (duplicate items for seamless loop)
-  ------------------------------------------------------------------- */
-  var originals = photoStrip.innerHTML;
-  photoStrip.innerHTML = originals + originals + originals;
-
-  var stripPaused = false;
-  var stripScrollLeft = 0;
-  var speed = 0.5;
-
-  function autoScrollStrip(){
-    if (!stripPaused){
-      stripScrollLeft += speed;
-      var oneSet = photoStrip.scrollWidth / 3;
-      if (stripScrollLeft >= oneSet){
-        stripScrollLeft -= oneSet;
-      }
-      photoStrip.scrollLeft = stripScrollLeft;
-    }
-    requestAnimationFrame(autoScrollStrip);
-  }
-  requestAnimationFrame(autoScrollStrip);
-
-  photoStrip.addEventListener("mouseenter", function(){ stripPaused = true; });
-  photoStrip.addEventListener("mouseleave", function(){ stripPaused = false; stripScrollLeft = photoStrip.scrollLeft; });
-  photoStrip.addEventListener("touchstart", function(){ stripPaused = true; }, { passive: true });
-  photoStrip.addEventListener("touchend", function(){ setTimeout(function(){ stripPaused = false; stripScrollLeft = photoStrip.scrollLeft; }, 1500); });
-
   /* photo upload preview */
   photoStrip.addEventListener("change", function(e){
     if (e.target.type !== "file" || !e.target.files || !e.target.files[0]) return;
