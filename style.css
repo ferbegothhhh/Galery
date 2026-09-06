@@ -537,6 +537,32 @@
     transform: scale(1.25);
   }
 
+  /* ---------- "Art by me" photo grid (above envelope) ---------- */
+  .letter-photos{
+    max-width: none;
+    width: 100%;
+    margin: 50px calc(50% - 50vw) 26px;
+    padding: 0 20px;
+  }
+  .letter-photos .strip-title{
+    margin-bottom: 26px;
+  }
+  #letterPhotoStrip{
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 16px;
+    padding: 8px 0 6px;
+  }
+  #letterPhotoStrip .polaroid{
+    width: 100%;
+  }
+  #letterPhotoStrip .polaroid .photo-caption{
+    display: none;
+  }
+  @media (max-width: 640px){
+    #letterPhotoStrip{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
   /* ---------- envelope dedication ---------- */
   .dedication-section{
     margin: 40px 0 30px;

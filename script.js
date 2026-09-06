@@ -166,6 +166,41 @@
     reader.readAsDataURL(e.target.files[0]);
   });
 
+  /* ------------------------------------------------------------------
+     3a. "Art by me" photo grid (12 slots, no captions)
+  ------------------------------------------------------------------- */
+  var letterPhotoStrip = document.getElementById("letterPhotoStrip");
+
+  if (letterPhotoStrip){
+    for (var l = 0; l < 12; l++){
+      var inputId = "letter-photo-" + l;
+      var polaroid = document.createElement("div");
+      polaroid.className = "polaroid";
+      polaroid.style.transform = "rotate(" + rotations[l % rotations.length] + "deg)";
+      polaroid.innerHTML =
+        '<label class="polaroid-label" for="' + inputId + '">' +
+          '<span class="tape"></span>' +
+          '<div class="photo-inner">' +
+            '<span class="hint-icon">♡</span>' +
+            '<span class="hint-text">ketuk untuk<br>menambah foto</span>' +
+          '</div>' +
+          '<input type="file" id="' + inputId + '" accept="image/*">' +
+        '</label>';
+      letterPhotoStrip.appendChild(polaroid);
+    }
+
+    letterPhotoStrip.addEventListener("change", function(e){
+      if (e.target.type !== "file" || !e.target.files || !e.target.files[0]) return;
+      var reader = new FileReader();
+      var photoInner = e.target.closest(".polaroid").querySelector(".photo-inner");
+      reader.onload = function(ev){
+        photoInner.style.backgroundImage = "url(" + ev.target.result + ")";
+        photoInner.classList.add("has-image");
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    });
+  }
+
   /* final polaroid upload preview */
   var finalPolaroid = document.querySelector(".final-polaroid");
   if (finalPolaroid){
