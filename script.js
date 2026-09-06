@@ -81,6 +81,55 @@
   });
 
   /* ------------------------------------------------------------------
+     2b. memory quotes slider
+  ------------------------------------------------------------------- */
+  var quotes = [
+    "setiap lagu yang kita dengar, selalu ingatkanku padamu.",
+    "kamu adalah kebetulan terindah yang pernah kusyukuri.",
+    "dari semua tempat di dunia, kamu yang paling kucari.",
+    "senyummu cukup untuk membuat hariku jadi lebih baik.",
+    "kalau waktu bisa kuputar, aku masih akan memilih bertemu kamu.",
+    "rumahku bukan tempat, tapi kamu.",
+    "setiap detik bersamamu terasa seperti lengkingan lagu favoritku.",
+    "kamu, di mana-mana ada kamu."
+  ];
+  var quoteEl = document.getElementById("memoryQuote");
+  var quoteDots = document.getElementById("quoteDots");
+  var quoteIndex = 0;
+  var quoteTimer = null;
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (quoteEl && quotes.length){
+    quotes.forEach(function(_, i){
+      var dot = document.createElement("button");
+      dot.className = "quote-dot" + (i === 0 ? " active" : "");
+      dot.setAttribute("aria-label", "Kenangan ke-" + (i + 1));
+      dot.addEventListener("click", function(){ showQuote(i); restartQuoteTimer(); });
+      quoteDots.appendChild(dot);
+    });
+
+    function showQuote(i){
+      var dotEls = quoteDots.querySelectorAll(".quote-dot");
+      if (!reduceMotion) quoteEl.classList.remove("quote-anim");
+      void quoteEl.offsetWidth;
+      quoteIndex = i;
+      quoteEl.textContent = quotes[i];
+      dotEls.forEach(function(d, j){
+        d.classList.toggle("active", j === i);
+      });
+      if (!reduceMotion) quoteEl.classList.add("quote-anim");
+    }
+
+    function restartQuoteTimer(){
+      if (quoteTimer) clearInterval(quoteTimer);
+      quoteTimer = setInterval(function(){ showQuote((quoteIndex + 1) % quotes.length); }, 4500);
+    }
+
+    showQuote(0);
+    restartQuoteTimer();
+  }
+
+  /* ------------------------------------------------------------------
      3. render photo strip (horizontal scroll)
   ------------------------------------------------------------------- */
   var photoStrip = document.getElementById("photoStrip");
@@ -407,5 +456,239 @@
       setTimeout(function(){ h.remove(); }, 900);
     });
   }
+
+})();
+
+/* ============================================================
+   TAMBAHAN HIASAN — kupu-kupu, sparkle (gaya ES5)
+   ============================================================ */
+
+(function () {
+
+  var BUTTERFLY_SPOTS = [
+    { top: "20%", left: "24%" },
+    { top: "58%", left: "76%" },
+    { top: "72%", left: "18%" }
+  ];
+
+  var SPARKLE_SPOTS = [
+    { top: "14%", left: "30%" },
+    { top: "34%", left: "70%" },
+    { top: "62%", left: "26%" },
+    { top: "70%", left: "82%" },
+    { top: "46%", left: "12%" },
+    { top: "24%", left: "88%" },
+    { top: "80%", left: "60%" },
+    { top: "10%", left: "60%" }
+  ];
+
+  var butterflySVG =
+    '<svg viewBox="0 0 24 22">' +
+      '<g class="wing wing-left"><path d="M12 11 C6 2, 0 4, 2 12 C4 18, 10 16, 12 11 Z" fill="#e8879f"/></g>' +
+      '<g class="wing wing-right"><path d="M12 11 C18 2, 24 4, 22 12 C20 18, 14 16, 12 11 Z" fill="#f0a6bc"/></g>' +
+      '<rect x="11" y="6" width="2" height="12" rx="1" fill="#7d6367"/>' +
+    '</svg>';
+
+  function addDecoLayer(container) {
+    var layer = document.createElement("div");
+    layer.className = "deco-layer";
+    layer.setAttribute("aria-hidden", "true");
+    container.appendChild(layer);
+    return layer;
+  }
+
+  function spawnButterflies(layer) {
+    for (var i = 0; i < BUTTERFLY_SPOTS.length; i++) {
+      var spot = BUTTERFLY_SPOTS[i];
+      var el = document.createElement("div");
+      el.className = "deco-butterfly";
+      el.style.top = spot.top;
+      el.style.left = spot.left;
+      el.style.animationDuration = (5 + i) + "s, " + (12 + i * 2) + "s";
+      el.innerHTML = butterflySVG;
+      layer.appendChild(el);
+    }
+  }
+
+  function spawnSparkles(layer) {
+    for (var i = 0; i < SPARKLE_SPOTS.length; i++) {
+      var spot = SPARKLE_SPOTS[i];
+      var el = document.createElement("div");
+      el.className = "deco-sparkle";
+      el.style.top = spot.top;
+      el.style.left = spot.left;
+      el.style.animationDelay = (i * 0.4) + "s";
+      layer.appendChild(el);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var hero = document.querySelector(".hero");
+    if (!hero) return;
+
+    var layer = addDecoLayer(hero);
+    spawnButterflies(layer);
+    spawnSparkles(layer);
+  });
+
+})();
+
+/* ============================================================
+   TAMBAHAN HIASAN #2 — garland, batang bunga, vine, zona petal/heart
+   ============================================================ */
+
+(function () {
+
+  var FLAG_COLORS = ["#f0a6bc", "#fbeff1", "#d8b48c", "#cf8a97"];
+  var FLAG_COUNT = 9;
+
+  var flowerStemSVG =
+    '<svg viewBox="0 0 26 74">' +
+      '<line x1="13" y1="22" x2="13" y2="74" stroke="#8fae7d" stroke-width="2"/>' +
+      '<g transform="translate(13,13)">' +
+        '<circle cx="0" cy="-8" r="6" fill="#f0a6bc"/>' +
+        '<circle cx="7" cy="-4" r="6" fill="#f0a6bc"/>' +
+        '<circle cx="7" cy="5" r="6" fill="#f0a6bc"/>' +
+        '<circle cx="0" cy="9" r="6" fill="#f0a6bc"/>' +
+        '<circle cx="-7" cy="5" r="6" fill="#f0a6bc"/>' +
+        '<circle cx="-7" cy="-4" r="6" fill="#f0a6bc"/>' +
+        '<circle cx="0" cy="0" r="5" fill="#d8b48c"/>' +
+      '</g>' +
+    '</svg>';
+
+  var FLOWER_STEM_SPOTS = [
+    { top: "32%", left: "16%" },
+    { top: "68%", left: "22%" },
+    { top: "40%", left: "84%" },
+    { top: "78%", left: "88%" }
+  ];
+
+  var ZONE_PETAL_SPOTS = [
+    { top: "6%", left: "45%" },
+    { top: "9%", left: "55%" },
+    { top: "28%", left: "18%" },
+    { top: "50%", left: "14%" },
+    { top: "30%", left: "82%" },
+    { top: "55%", left: "86%" }
+  ];
+
+  var ZONE_HEART_SPOTS = [
+    { top: "4%", left: "38%" },
+    { top: "18%", left: "20%" },
+    { top: "44%", left: "16%" },
+    { top: "20%", left: "80%" },
+    { top: "46%", left: "84%" }
+  ];
+
+  function vineSVG() {
+    return (
+      '<svg viewBox="0 0 26 800" preserveAspectRatio="none">' +
+        '<path d="M13 0 C 4 60, 22 120, 13 180 S 4 300, 13 360 S 22 480, 13 540 S 4 660, 13 720 S 22 780, 13 800" ' +
+              'fill="none" stroke="#8fae7d" stroke-width="2"/>' +
+        '<g fill="#a8c78f">' +
+          '<ellipse cx="4" cy="90" rx="7" ry="3.5" transform="rotate(-30 4 90)"/>' +
+          '<ellipse cx="22" cy="210" rx="7" ry="3.5" transform="rotate(30 22 210)"/>' +
+          '<ellipse cx="4" cy="330" rx="7" ry="3.5" transform="rotate(-30 4 330)"/>' +
+          '<ellipse cx="22" cy="450" rx="7" ry="3.5" transform="rotate(30 22 450)"/>' +
+          '<ellipse cx="4" cy="570" rx="7" ry="3.5" transform="rotate(-30 4 570)"/>' +
+          '<ellipse cx="22" cy="690" rx="7" ry="3.5" transform="rotate(30 22 690)"/>' +
+        '</g>' +
+      '</svg>'
+    );
+  }
+
+  function spawnGarland(container) {
+    var garland = document.createElement("div");
+    garland.className = "garland";
+    garland.setAttribute("aria-hidden", "true");
+
+    var string = document.createElement("div");
+    string.className = "garland-string";
+    garland.appendChild(string);
+
+    for (var i = 0; i < FLAG_COUNT; i++) {
+      var flag = document.createElement("div");
+      flag.className = "garland-flag";
+      flag.style.left = ((i / (FLAG_COUNT - 1)) * 100) + "%";
+      flag.style.background = FLAG_COLORS[i % FLAG_COLORS.length];
+      flag.style.animationDelay = (i * 0.15) + "s";
+      garland.appendChild(flag);
+    }
+
+    container.appendChild(garland);
+  }
+
+  function spawnFlowerStems(layer) {
+    for (var i = 0; i < FLOWER_STEM_SPOTS.length; i++) {
+      var spot = FLOWER_STEM_SPOTS[i];
+      var el = document.createElement("div");
+      el.className = "deco-flower-stem";
+      el.style.top = spot.top;
+      el.style.left = spot.left;
+      el.style.animationDelay = (i * 0.3) + "s";
+      el.innerHTML = flowerStemSVG;
+      layer.appendChild(el);
+    }
+  }
+
+  function spawnVines(layer) {
+    var left = document.createElement("div");
+    left.className = "deco-vine left";
+    left.innerHTML = vineSVG();
+    layer.appendChild(left);
+
+    var right = document.createElement("div");
+    right.className = "deco-vine right";
+    right.innerHTML = vineSVG();
+    layer.appendChild(right);
+  }
+
+  function spawnZonePetals(layer) {
+    for (var i = 0; i < ZONE_PETAL_SPOTS.length; i++) {
+      var spot = ZONE_PETAL_SPOTS[i];
+      var el = document.createElement("div");
+      el.className = "zone-petal";
+      el.textContent = "🌸";
+      el.style.top = spot.top;
+      el.style.left = spot.left;
+      el.style.animationDelay = (i * 0.55) + "s";
+      el.style.setProperty("--zd", ((i % 3) * 8 - 8) + "px");
+      layer.appendChild(el);
+    }
+  }
+
+  function spawnZoneHearts(layer) {
+    for (var i = 0; i < ZONE_HEART_SPOTS.length; i++) {
+      var spot = ZONE_HEART_SPOTS[i];
+      var el = document.createElement("div");
+      el.className = "zone-heart";
+      el.textContent = "♡";
+      el.style.top = spot.top;
+      el.style.left = spot.left;
+      el.style.animationDelay = (i * 0.5) + "s";
+      el.style.setProperty("--zd", ((-1 * (i % 3)) * 8 + 8) + "px");
+      layer.appendChild(el);
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    var hero = document.querySelector(".hero");
+    if (!hero) return;
+
+    spawnGarland(hero);
+
+    var layer = hero.querySelector(".deco-layer");
+    if (!layer) {
+      layer = document.createElement("div");
+      layer.className = "deco-layer";
+      layer.setAttribute("aria-hidden", "true");
+      hero.appendChild(layer);
+    }
+
+    spawnFlowerStems(layer);
+    spawnVines(layer);
+    spawnZonePetals(layer);
+    spawnZoneHearts(layer);
+  });
 
 })();
