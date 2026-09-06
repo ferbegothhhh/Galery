@@ -167,9 +167,24 @@
   });
 
   /* ------------------------------------------------------------------
-     3a. "Art by me" photo grid (12 slots, no captions)
+     3a. "Art by me" photo grid (12 slots, pre-filled)
   ------------------------------------------------------------------- */
   var letterPhotoStrip = document.getElementById("letterPhotoStrip");
+
+  var letterPhotoPaths = [
+    "Art%20by%20me/Tak_berjudul98_1.png",
+    "Art%20by%20me/IMG_20251017_174207_622.jpg",
+    "Art%20by%20me/Tak_berjudul89_1.png",
+    "Art%20by%20me/IMG_20260905_133345_001.jpg",
+    "Art%20by%20me/Tak_berjudul78_1.png",
+    "Art%20by%20me/quality_restoration_20260905134242979.jpg",
+    "Art%20by%20me/Tak_berjudul55_2.png",
+    "Art%20by%20me/Untitled111_1.png",
+    "Art%20by%20me/Tak_berjudul19_2.png",
+    "Art%20by%20me/Untitled106.png",
+    "Art%20by%20me/Tak_berjudul97_1.png",
+    "Art%20by%20me/IMG_20260905_133520_701.jpg"
+  ];
 
   if (letterPhotoStrip){
     for (var l = 0; l < 12; l++){
@@ -186,6 +201,11 @@
           '</div>' +
           '<input type="file" id="' + inputId + '" accept="image/*">' +
         '</label>';
+      if (letterPhotoPaths[l]){
+        var photoInner = polaroid.querySelector(".photo-inner");
+        photoInner.style.backgroundImage = "url(" + letterPhotoPaths[l] + ")";
+        photoInner.classList.add("has-image");
+      }
       letterPhotoStrip.appendChild(polaroid);
     }
 
