@@ -538,29 +538,51 @@
   }
 
   /* ---------- "Art by me" photo grid (above envelope) ---------- */
-  .letter-photos{
-    max-width: none;
-    width: 100%;
-    margin: 50px calc(50% - 50vw) 26px;
-    padding: 0 20px;
+  .letter-photos.entry{
+    width: 100vw !important;
+    max-width: none !important;
+    min-height: 100vh !important;
+    position: relative !important;
+    left: 50% !important;
+    margin-left: -50vw !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 30px 3vw !important;
+    box-sizing: border-box !important;
   }
   .letter-photos .strip-title{
-    margin-bottom: 26px;
+    text-align: center !important;
+    width: 100% !important;
+    margin-bottom: 25px !important;
+    font-size: 2.5rem !important;
   }
   #letterPhotoStrip{
-    display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 16px;
-    padding: 8px 0 6px;
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 15px !important;
+    width: 100% !important;
+    max-width: 1750px !important;
+    margin: 0 auto !important;
   }
   #letterPhotoStrip .polaroid{
-    width: 100%;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+  }
+  #letterPhotoStrip .polaroid .polaroid-label{
+    width: 100% !important;
+    display: block !important;
   }
   #letterPhotoStrip .polaroid .photo-caption{
-    display: none;
+    display: none !important;
   }
-  @media (max-width: 640px){
-    #letterPhotoStrip{ grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  @media (max-width: 1200px){
+    #letterPhotoStrip{ grid-template-columns: repeat(4, 1fr) !important; }
+  }
+  @media (max-width: 768px){
+    #letterPhotoStrip{ grid-template-columns: repeat(3, 1fr) !important; }
   }
 
   /* ---------- envelope dedication ---------- */
