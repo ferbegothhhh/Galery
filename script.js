@@ -221,9 +221,24 @@
     });
   }
 
-  /* final polaroid upload preview */
+  /* final polaroid upload preview + flip on click */
   var finalPolaroid = document.querySelector(".final-polaroid");
   if (finalPolaroid){
+    var finalFlipBusy = false;
+    finalPolaroid.addEventListener("click", function(e){
+      if (finalFlipBusy) return;
+      e.preventDefault();
+      finalFlipBusy = true;
+      finalPolaroid.classList.remove("flip-active");
+      void finalPolaroid.offsetWidth;
+      finalPolaroid.classList.add("flip-active");
+      setTimeout(function(){
+        finalPolaroid.classList.remove("flip-active");
+        var finalInput = finalPolaroid.querySelector('input[type="file"]');
+        if (finalInput) finalInput.click();
+        finalFlipBusy = false;
+      }, 800);
+    });
     finalPolaroid.addEventListener("change", function(e){
       if (e.target.type !== "file" || !e.target.files || !e.target.files[0]) return;
       var reader = new FileReader();
