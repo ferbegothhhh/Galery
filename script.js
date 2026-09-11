@@ -221,28 +221,40 @@
     });
   }
 
-  /* final polaroid upload preview + flip on click */
-  var finalPolaroid = document.querySelector(".final-polaroid");
+  /* final polaroid flip card — 2 sisi, upload per sisi */
+  var finalPolaroid = document.getElementById("finalPolaroid");
   if (finalPolaroid){
     var finalFlipBusy = false;
-    finalPolaroid.addEventListener("click", function(e){
+    function openFinalPicker(face){
+      var input = face.querySelector('input[type="file"]');
+      if (input) input.click();
+    }
+    function toggleFinalFlip(){
       if (finalFlipBusy) return;
-      e.preventDefault();
       finalFlipBusy = true;
-      finalPolaroid.classList.remove("flip-active");
-      void finalPolaroid.offsetWidth;
-      finalPolaroid.classList.add("flip-active");
+      var flipped = finalPolaroid.classList.toggle("flipped");
+      var visibleFace = flipped ?
+        finalPolaroid.querySelector(".final-back") :
+        finalPolaroid.querySelector(".final-front");
       setTimeout(function(){
-        finalPolaroid.classList.remove("flip-active");
-        var finalInput = finalPolaroid.querySelector('input[type="file"]');
-        if (finalInput) finalInput.click();
+        openFinalPicker(visibleFace);
         finalFlipBusy = false;
       }, 800);
+    }
+    finalPolaroid.addEventListener("click", function(e){
+      e.preventDefault();
+      toggleFinalFlip();
+    });
+    finalPolaroid.addEventListener("keydown", function(e){
+      if (e.key === "Enter" || e.key === " "){
+        e.preventDefault();
+        toggleFinalFlip();
+      }
     });
     finalPolaroid.addEventListener("change", function(e){
       if (e.target.type !== "file" || !e.target.files || !e.target.files[0]) return;
       var reader = new FileReader();
-      var photoInner = finalPolaroid.querySelector(".photo-inner");
+      var photoInner = e.target.closest(".final-face").querySelector(".photo-inner");
       reader.onload = function(ev){
         photoInner.style.backgroundImage = "url(" + ev.target.result + ")";
         photoInner.classList.add("has-image");

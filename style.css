@@ -333,8 +333,12 @@
     display: block;
     cursor: pointer;
   }
-  .polaroid:hover{
+  .polaroid:not(.final-polaroid):hover{
     transform: translateY(-10px) rotate(0deg) scale(1.03) !important;
+    box-shadow: 0 22px 40px var(--shadow-hover);
+    z-index: 2;
+  }
+  .final-polaroid:hover{
     box-shadow: 0 22px 40px var(--shadow-hover);
     z-index: 2;
   }
@@ -734,18 +738,34 @@
     perspective: 1000px;
   }
   .final-polaroid{
+    position: relative;
     width: 480px;
-    padding: 24px 24px 80px;
-    text-align: center;
+    padding: 0;
+    display: grid;
     transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(.4,0,.2,1);
+    cursor: pointer;
+    text-align: center;
   }
-  .final-polaroid.flip-active{
-    animation: polaroidFlip 0.8s cubic-bezier(.4,0,.2,1) forwards;
+  .final-polaroid.flipped{
+    transform: rotateY(180deg);
   }
-  @keyframes polaroidFlip{
-    0%   { transform: rotateY(0deg) scale(1); }
-    50%  { transform: rotateY(180deg) scale(0.92); }
-    100% { transform: rotateY(360deg) scale(1); }
+  .final-face{
+    grid-area: 1 / 1;
+    position: relative;
+    background: var(--paper);
+    padding: 24px 24px 80px;
+    border-radius: 4px;
+    box-shadow: 0 12px 24px var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .final-back{
+    transform: rotateY(180deg);
   }
   .final-polaroid .photo-caption{
     font-size: 1.3rem;

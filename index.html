@@ -161,15 +161,29 @@
   <div class="divider"><span>♡</span></div>
 
   <section class="closing-polaroid entry">
-    <label class="polaroid final-polaroid" for="photo-final">
+    <div class="polaroid final-polaroid" id="finalPolaroid" role="button" tabindex="0" aria-label="Ketuk untuk membalik polaroid dan menaruh foto">
       <span class="tape"></span>
-      <div class="photo-inner">
-        <span class="hint-icon">♡</span>
-        <span class="hint-text">ketuk untuk<br>menaruh fotomu di sini</span>
+      <div class="final-face final-front">
+        <label class="polaroid-label" for="photo-final-1">
+          <div class="photo-inner">
+            <span class="hint-icon">♡</span>
+            <span class="hint-text">ketuk untuk<br>menaruh fotomu di sini</span>
+          </div>
+          <span class="photo-caption">tempat aku jatuh cinta padamu</span>
+          <input type="file" id="photo-final-1" accept="image/*">
+        </label>
       </div>
-      <span class="photo-caption">tempat aku jatuh cinta padamu</span>
-      <input type="file" id="photo-final" accept="image/*">
-    </label>
+      <div class="final-face final-back">
+        <label class="polaroid-label" for="photo-final-2">
+          <div class="photo-inner">
+            <span class="hint-icon">♡</span>
+            <span class="hint-text">ketuk untuk<br>menaruh fotomu di sini</span>
+          </div>
+          <span class="photo-caption">tempat aku jatuh cinta setiap hari</span>
+          <input type="file" id="photo-final-2" accept="image/*">
+        </label>
+      </div>
+    </div>
   </section>
 
   
