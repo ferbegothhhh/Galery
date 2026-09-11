@@ -71,12 +71,12 @@
   var rotations = [-6, 5, -3, 4, -4];
 
   var photoStripPaths = [
-    "photos/photo%20stript/WhatsApp%20Image%202026-09-11%20at%2020.40.33.jpeg",
-    "photos/photo%20stript/WhatsApp%20Image%202026-09-11%20at%2020.40.38%20(1).jpeg",
-    "photos/photo%20stript/WhatsApp%20Image%202026-09-11%20at%2020.40.41%20(2).jpeg",
-    "photos/photo%20stript/WhatsApp%20Image%202026-09-11%20at%2020.40.41.jpeg",
-    "photos/photo%20stript/WhatsApp%20Image%202026-09-11%20at%2020.40.42%20(3).jpeg",
-    "photos/photo%20stript/WhatsApp%20Image%202026-09-11%20at%2020.40.42.jpeg"
+    "photos/photo-stript/1.jpg",
+    "photos/photo-stript/2.jpg",
+    "photos/photo-stript/3.jpg",
+    "photos/photo-stript/4.jpg",
+    "photos/photo-stript/5.jpg",
+    "photos/photo-stript/6.jpg"
   ];
 
   var playlist = [
@@ -183,7 +183,7 @@
       '</label>';
     if (photoStripPaths[i]){
       var photoInner = polaroid.querySelector(".photo-inner");
-      photoInner.style.backgroundImage = "url(" + photoStripPaths[i] + ")";
+      photoInner.style.backgroundImage = "url(\"" + photoStripPaths[i] + "\")";
       photoInner.classList.add("has-image");
     }
     photoStrip.appendChild(polaroid);
@@ -195,7 +195,7 @@
     var reader = new FileReader();
     var photoInner = e.target.closest(".polaroid").querySelector(".photo-inner");
     reader.onload = function(ev){
-      photoInner.style.backgroundImage = "url(" + ev.target.result + ")";
+      photoInner.style.backgroundImage = "url(\"" + ev.target.result + "\")";
       photoInner.classList.add("has-image");
     };
     reader.readAsDataURL(e.target.files[0]);
@@ -250,7 +250,7 @@
         '</label>';
       if (letterPhotoPaths[l]){
         var photoInner = polaroid.querySelector(".photo-inner");
-        photoInner.style.backgroundImage = "url(" + letterPhotoPaths[l] + ")";
+        photoInner.style.backgroundImage = "url(\"" + letterPhotoPaths[l] + "\")";
         photoInner.classList.add("has-image");
       }
       letterPhotoStrip.appendChild(polaroid);
@@ -261,7 +261,7 @@
       var reader = new FileReader();
       var photoInner = e.target.closest(".polaroid").querySelector(".photo-inner");
       reader.onload = function(ev){
-        photoInner.style.backgroundImage = "url(" + ev.target.result + ")";
+        photoInner.style.backgroundImage = "url(\"" + ev.target.result + "\")";
         photoInner.classList.add("has-image");
       };
       reader.readAsDataURL(e.target.files[0]);
@@ -272,19 +272,19 @@
   var finalPolaroid = document.getElementById("finalPolaroid");
 
   var closingPhotoPaths = [
-    "photos/closing%20palaloid/Tak_berjudul98_1.png",
-    "photos/closing%20palaloid/WhatsApp%20Image%202026-09-11%20at%2020.40.40%20(2).jpeg"
+    "photos/closing-palaloid/1.png",
+    "photos/closing-palaloid/2.jpg"
   ];
 
   if (finalPolaroid){
     var frontInner = finalPolaroid.querySelector(".final-front .photo-inner");
     if (frontInner && closingPhotoPaths[0]){
-      frontInner.style.backgroundImage = "url(" + closingPhotoPaths[0] + ")";
+      frontInner.style.backgroundImage = "url(\"" + closingPhotoPaths[0] + "\")";
       frontInner.classList.add("has-image");
     }
     var backInner = finalPolaroid.querySelector(".final-back .photo-inner");
     if (backInner && closingPhotoPaths[1]){
-      backInner.style.backgroundImage = "url(" + closingPhotoPaths[1] + ")";
+      backInner.style.backgroundImage = "url(\"" + closingPhotoPaths[1] + "\")";
       backInner.classList.add("has-image");
     }
 
@@ -320,7 +320,7 @@
       var reader = new FileReader();
       var photoInner = e.target.closest(".final-face").querySelector(".photo-inner");
       reader.onload = function(ev){
-        photoInner.style.backgroundImage = "url(" + ev.target.result + ")";
+        photoInner.style.backgroundImage = "url(\"" + ev.target.result + "\")";
         photoInner.classList.add("has-image");
       };
       reader.readAsDataURL(e.target.files[0]);
@@ -337,22 +337,22 @@
   var marqueeRotations = [-5, 4, -3, 5, -4, 3, -4, 5];
 
   var marqueePhotoPaths = [
-    "photos/marque/WhatsApp%20Image%202026-07-24%20at%2022.26.33.jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-06%20at%2013.08.50.jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.32.jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.33%20(1).jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.33.jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.34%20(1).jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.34.jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.35%20(1).jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.35%20(2).jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.35.jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.36%20(1).jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.36%20(2).jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.36%20(3).jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.36.jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.37%20(1).jpeg",
-    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.37%20(2).jpeg"
+    "photos/marque/1.jpg",
+    "photos/marque/2.jpg",
+    "photos/marque/3.jpg",
+    "photos/marque/4.jpg",
+    "photos/marque/5.jpg",
+    "photos/marque/6.jpg",
+    "photos/marque/7.jpg",
+    "photos/marque/8.jpg",
+    "photos/marque/9.jpg",
+    "photos/marque/10.jpg",
+    "photos/marque/11.jpg",
+    "photos/marque/12.jpg",
+    "photos/marque/13.jpg",
+    "photos/marque/14.jpg",
+    "photos/marque/15.jpg",
+    "photos/marque/16.jpg"
   ];
 
   function buildMarquee(stripEl, captions, seedOffset, photoArr){
@@ -374,7 +374,7 @@
         '</label>';
       if (photoArr && photoArr[i]){
         var photoInner = polaroid.querySelector(".photo-inner");
-        photoInner.style.backgroundImage = "url(" + photoArr[i] + ")";
+        photoInner.style.backgroundImage = "url(\"" + photoArr[i] + "\")";
         photoInner.classList.add("has-image");
       }
       stripEl.appendChild(polaroid);
@@ -427,7 +427,7 @@
       var reader = new FileReader();
       var photoInner = e.target.closest(".polaroid").querySelector(".photo-inner");
       reader.onload = function(ev){
-        photoInner.style.backgroundImage = "url(" + ev.target.result + ")";
+        photoInner.style.backgroundImage = "url(\"" + ev.target.result + "\")";
         photoInner.classList.add("has-image");
       };
       reader.readAsDataURL(e.target.files[0]);
