@@ -123,10 +123,6 @@
     animation: hero-in 0.9s cubic-bezier(.2,.9,.3,1.2) 0.25s forwards;
     outline: none;
   }
-  h1[contenteditable="true"]:focus{
-    border-bottom: 2px dashed var(--rose);
-  }
-
   .hero-sub{
     font-size: 0.98rem;
     color: var(--ink-soft);
