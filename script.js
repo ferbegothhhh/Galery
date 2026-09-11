@@ -48,6 +48,23 @@
   });
 
   /* ------------------------------------------------------------------
+     0c. back to top button
+  ------------------------------------------------------------------- */
+  var backTopBtn = document.getElementById("backTopBtn");
+  if (backTopBtn){
+    function updateBackTop(){
+      var show = window.scrollY > 600;
+      backTopBtn.classList.toggle("show", show);
+      backTopBtn.setAttribute("aria-hidden", show ? "false" : "true");
+    }
+    window.addEventListener("scroll", updateBackTop, { passive: true });
+    updateBackTop();
+    backTopBtn.addEventListener("click", function(){
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  /* ------------------------------------------------------------------
      1. content data
   ------------------------------------------------------------------- */
   var photoCaptions = ["kita", "senyummu", "hari itu", "favoritku", "selalu", "kamu"];
@@ -267,10 +284,10 @@
      3b. bottom marquee (two infinite strips: right + left)
   ------------------------------------------------------------------- */
   var marqueeCaptions = [
-    [ "kita", "senyummu", "hari itu", "favoritku", "selalu" ],
-    [ "kamu", "rumahku", "rinduku", "cinta", "selalu" ]
+    [ "kita", "senyummu", "hari itu", "favoritku", "selalu", "pelukmu", "tawamu", "rumahku" ],
+    [ "kamu", "rumahku", "rinduku", "cinta", "selalu", "genggaman", "nada", "senja" ]
   ];
-  var marqueeRotations = [-5, 4, -3, 5, -4];
+  var marqueeRotations = [-5, 4, -3, 5, -4, 3, -4, 5];
 
   function buildMarquee(stripEl, captions, seedOffset){
     captions.forEach(function(cap, i){
