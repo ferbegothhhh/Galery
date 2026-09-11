@@ -67,7 +67,6 @@
   /* ------------------------------------------------------------------
      1. content data
   ------------------------------------------------------------------- */
-  var photoCaptions = ["kita", "senyummu", "hari itu", "favoritku", "selalu", "kamu"];
   var rotations = [-6, 5, -3, 4, -4];
 
   var photoStripPaths = [
@@ -165,7 +164,7 @@
   var photoStrip = document.getElementById("photoStrip");
   var fileCounter = 0;
 
-  photoCaptions.forEach(function(caption, i){
+  photoStripPaths.forEach(function(_, i){
     var inputId = "photo-upload-" + (fileCounter++);
     var rot = rotations[i % rotations.length];
     var polaroid = document.createElement("div");
@@ -178,7 +177,6 @@
           '<span class="hint-icon">♡</span>' +
           '<span class="hint-text">ketuk untuk<br>menambah foto</span>' +
         '</div>' +
-        '<span class="photo-caption">' + caption + '</span>' +
         '<input type="file" id="' + inputId + '" accept="image/*">' +
       '</label>';
     if (photoStripPaths[i]){
@@ -330,10 +328,6 @@
   /* ------------------------------------------------------------------
      3b. bottom marquee (two infinite strips: right + left)
   ------------------------------------------------------------------- */
-  var marqueeCaptions = [
-    [ "kita", "senyummu", "hari itu", "favoritku", "selalu", "pelukmu", "tawamu", "rumahku" ],
-    [ "kamu", "rumahku", "rinduku", "cinta", "selalu", "genggaman", "nada", "senja" ]
-  ];
   var marqueeRotations = [-5, 4, -3, 5, -4, 3, -4, 5];
 
   var marqueePhotoPaths = [
@@ -355,8 +349,8 @@
     "photos/marque/16.jpg"
   ];
 
-  function buildMarquee(stripEl, captions, seedOffset, photoArr){
-    captions.forEach(function(cap, i){
+  function buildMarquee(stripEl, seedOffset, photoArr){
+    photoArr.forEach(function(_, i){
       var inputId = "marquee-" + stripEl.id + "-" + i + "-" + seedOffset;
       var rot = marqueeRotations[(i + seedOffset) % marqueeRotations.length];
       var polaroid = document.createElement("div");
@@ -369,10 +363,9 @@
             '<span class="hint-icon">♡</span>' +
             '<span class="hint-text">ketuk untuk<br>menambah foto</span>' +
           '</div>' +
-          '<span class="photo-caption">' + cap + '</span>' +
           '<input type="file" id="' + inputId + '" accept="image/*">' +
         '</label>';
-      if (photoArr && photoArr[i]){
+      if (photoArr[i]){
         var photoInner = polaroid.querySelector(".photo-inner");
         photoInner.style.backgroundImage = "url(\"" + photoArr[i] + "\")";
         photoInner.classList.add("has-image");
@@ -385,11 +378,11 @@
   var marqueeLeft = document.getElementById("marqueeLeft");
 
   if (marqueeRight){
-    buildMarquee(marqueeRight, marqueeCaptions[0], 0, marqueePhotoPaths.slice(0, 8));
+    buildMarquee(marqueeRight, 0, marqueePhotoPaths.slice(0, 8));
     marqueeRight.innerHTML = marqueeRight.innerHTML + marqueeRight.innerHTML;
   }
   if (marqueeLeft){
-    buildMarquee(marqueeLeft, marqueeCaptions[1], 3, marqueePhotoPaths.slice(8, 16));
+    buildMarquee(marqueeLeft, 3, marqueePhotoPaths.slice(8, 16));
     marqueeLeft.innerHTML = marqueeLeft.innerHTML + marqueeLeft.innerHTML;
   }
 

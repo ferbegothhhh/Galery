@@ -328,7 +328,7 @@
   }
   .polaroid{
     background: var(--paper);
-    padding: 14px 14px 46px;
+    padding: 14px 14px 20px;
     border-radius: 4px;
     box-shadow: 0 12px 24px var(--shadow);
     width: 230px;
