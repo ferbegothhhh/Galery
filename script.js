@@ -71,12 +71,12 @@
   var rotations = [-6, 5, -3, 4, -4];
 
   var playlist = [
-    { title: "Tough Luck", artist: "Laufey" },
-    { title: "Castle in Hollywood", artist: "Laufey" },
-    { title: "If You Want To", artist: "beabadoobee" },
-    { title: "The Perfect Pair", artist: "beabadoobee" },
-    { title: "ASAP", artist: "NewJeans" },
-    { title: "Am I Bothering You", artist: "Reality Club" }
+    { title: "Tough Luck", artist: "Laufey", url: "https://open.spotify.com/track/1GexRDFzRQpNkflfXgI2lM", cover: "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02ef6809d9f73321fcd2e77b4b" },
+    { title: "Castle in Hollywood", artist: "Laufey", url: "https://open.spotify.com/track/3zTnSPti5JjNsowJH4SS3u", cover: "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028f68f6e65c1cfd36bb21561c" },
+    { title: "If You Want To", artist: "beabadoobee", url: "https://open.spotify.com/track/7I1kle4TNmkfednJDKo8GR", cover: "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02fe11583497b2a332995b88ed" },
+    { title: "The Perfect Pair", artist: "beabadoobee", url: "https://open.spotify.com/track/41P6Tnd8KIHqON0QIydx6a", cover: "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02384d10f967c2b914de7e2713" },
+    { title: "ASAP", artist: "NewJeans", url: "https://open.spotify.com/track/5fpyAakgFOm4YTXkgfPzvV", cover: "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020744690248ef3ba7b776ea7b" },
+    { title: "Am I Bothering You", artist: "Reality Club", url: "https://open.spotify.com/track/4XEJR0jb29elGda86cL0IK", cover: "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02c607bcd8355681ab4fac2968" }
   ];
 
   /* ------------------------------------------------------------------
@@ -85,10 +85,14 @@
   var playlistEl = document.getElementById("playlist");
 
   playlist.forEach(function(song, i){
-    var item = document.createElement("div");
+    var item = document.createElement("a");
     item.className = "music-card";
+    item.href = song.url;
+    item.target = "_blank";
+    item.rel = "noopener";
+    item.setAttribute("aria-label", "Putar " + song.title + " di Spotify");
     item.innerHTML =
-      '<span class="music-icon">♪</span>' +
+      '<span class="music-cover"><img src="' + song.cover + '" alt="' + song.title + '"></span>' +
       '<div>' +
         '<p class="music-title">' + song.title + '</p>' +
         '<p class="music-artist">' + song.artist + '</p>' +
