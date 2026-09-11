@@ -162,41 +162,23 @@
      3. render photo strip (horizontal scroll)
   ------------------------------------------------------------------- */
   var photoStrip = document.getElementById("photoStrip");
-  var fileCounter = 0;
 
   photoStripPaths.forEach(function(_, i){
-    var inputId = "photo-upload-" + (fileCounter++);
     var rot = rotations[i % rotations.length];
     var polaroid = document.createElement("div");
     polaroid.className = "polaroid";
     polaroid.style.transform = "rotate(" + rot + "deg)";
     polaroid.innerHTML =
-      '<label class="polaroid-label" for="' + inputId + '">' +
+      '<div class="polaroid-label">' +
         '<span class="tape"></span>' +
-        '<div class="photo-inner">' +
-          '<span class="hint-icon">♡</span>' +
-          '<span class="hint-text">ketuk untuk<br>menambah foto</span>' +
-        '</div>' +
-        '<input type="file" id="' + inputId + '" accept="image/*">' +
-      '</label>';
+        '<div class="photo-inner"></div>' +
+      '</div>';
     if (photoStripPaths[i]){
       var photoInner = polaroid.querySelector(".photo-inner");
       photoInner.style.backgroundImage = "url(\"" + photoStripPaths[i] + "\")";
       photoInner.classList.add("has-image");
     }
     photoStrip.appendChild(polaroid);
-  });
-
-  /* photo upload preview */
-  photoStrip.addEventListener("change", function(e){
-    if (e.target.type !== "file" || !e.target.files || !e.target.files[0]) return;
-    var reader = new FileReader();
-    var photoInner = e.target.closest(".polaroid").querySelector(".photo-inner");
-    reader.onload = function(ev){
-      photoInner.style.backgroundImage = "url(\"" + ev.target.result + "\")";
-      photoInner.classList.add("has-image");
-    };
-    reader.readAsDataURL(e.target.files[0]);
   });
 
   /* ------------------------------------------------------------------
@@ -233,19 +215,14 @@
 
   if (letterPhotoStrip){
     for (var l = 0; l < 24; l++){
-      var inputId = "letter-photo-" + l;
       var polaroid = document.createElement("div");
       polaroid.className = "polaroid";
       polaroid.style.transform = "rotate(" + rotations[l % rotations.length] + "deg)";
       polaroid.innerHTML =
-        '<label class="polaroid-label" for="' + inputId + '">' +
+        '<div class="polaroid-label">' +
           '<span class="tape"></span>' +
-          '<div class="photo-inner">' +
-            '<span class="hint-icon">♡</span>' +
-            '<span class="hint-text">ketuk untuk<br>menambah foto</span>' +
-          '</div>' +
-          '<input type="file" id="' + inputId + '" accept="image/*">' +
-        '</label>';
+          '<div class="photo-inner"></div>' +
+        '</div>';
       if (letterPhotoPaths[l]){
         var photoInner = polaroid.querySelector(".photo-inner");
         photoInner.style.backgroundImage = "url(\"" + letterPhotoPaths[l] + "\")";
@@ -253,17 +230,6 @@
       }
       letterPhotoStrip.appendChild(polaroid);
     }
-
-    letterPhotoStrip.addEventListener("change", function(e){
-      if (e.target.type !== "file" || !e.target.files || !e.target.files[0]) return;
-      var reader = new FileReader();
-      var photoInner = e.target.closest(".polaroid").querySelector(".photo-inner");
-      reader.onload = function(ev){
-        photoInner.style.backgroundImage = "url(\"" + ev.target.result + "\")";
-        photoInner.classList.add("has-image");
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    });
   }
 
   /* final polaroid flip card — 2 sisi, upload per sisi */
@@ -287,19 +253,11 @@
     }
 
     var finalFlipBusy = false;
-    function openFinalPicker(face){
-      var input = face.querySelector('input[type="file"]');
-      if (input) input.click();
-    }
     function toggleFinalFlip(){
       if (finalFlipBusy) return;
       finalFlipBusy = true;
-      var flipped = finalPolaroid.classList.toggle("flipped");
-      var visibleFace = flipped ?
-        finalPolaroid.querySelector(".final-back") :
-        finalPolaroid.querySelector(".final-front");
+      finalPolaroid.classList.toggle("flipped");
       setTimeout(function(){
-        openFinalPicker(visibleFace);
         finalFlipBusy = false;
       }, 800);
     }
@@ -312,16 +270,6 @@
         e.preventDefault();
         toggleFinalFlip();
       }
-    });
-    finalPolaroid.addEventListener("change", function(e){
-      if (e.target.type !== "file" || !e.target.files || !e.target.files[0]) return;
-      var reader = new FileReader();
-      var photoInner = e.target.closest(".final-face").querySelector(".photo-inner");
-      reader.onload = function(ev){
-        photoInner.style.backgroundImage = "url(\"" + ev.target.result + "\")";
-        photoInner.classList.add("has-image");
-      };
-      reader.readAsDataURL(e.target.files[0]);
     });
   }
 
@@ -351,20 +299,15 @@
 
   function buildMarquee(stripEl, seedOffset, photoArr){
     photoArr.forEach(function(_, i){
-      var inputId = "marquee-" + stripEl.id + "-" + i + "-" + seedOffset;
       var rot = marqueeRotations[(i + seedOffset) % marqueeRotations.length];
       var polaroid = document.createElement("div");
       polaroid.className = "polaroid";
       polaroid.style.transform = "rotate(" + rot + "deg)";
       polaroid.innerHTML =
-        '<label class="polaroid-label" for="' + inputId + '">' +
+        '<div class="polaroid-label">' +
           '<span class="tape"></span>' +
-          '<div class="photo-inner">' +
-            '<span class="hint-icon">♡</span>' +
-            '<span class="hint-text">ketuk untuk<br>menambah foto</span>' +
-          '</div>' +
-          '<input type="file" id="' + inputId + '" accept="image/*">' +
-        '</label>';
+          '<div class="photo-inner"></div>' +
+        '</div>';
       if (photoArr[i]){
         var photoInner = polaroid.querySelector(".photo-inner");
         photoInner.style.backgroundImage = "url(\"" + photoArr[i] + "\")";
@@ -413,19 +356,6 @@
   }
   if (marqueeRight) initMarqueeScroll(marqueeRight, "right");
   if (marqueeLeft) initMarqueeScroll(marqueeLeft, "left");
-
-  document.querySelectorAll(".marquee-strip").forEach(function(strip){
-    strip.addEventListener("change", function(e){
-      if (e.target.type !== "file" || !e.target.files || !e.target.files[0]) return;
-      var reader = new FileReader();
-      var photoInner = e.target.closest(".polaroid").querySelector(".photo-inner");
-      reader.onload = function(ev){
-        photoInner.style.backgroundImage = "url(\"" + ev.target.result + "\")";
-        photoInner.classList.add("has-image");
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    });
-  });
 
   /* ------------------------------------------------------------------
      4. scroll reveal (Intersection Observer, staggered)

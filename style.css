@@ -274,13 +274,6 @@
     text-align: center;
     margin: 0 0 18px;
   }
-  .strip-hint{
-    text-align: left;
-    font-size: 0.78rem;
-    color: var(--ink-soft);
-    opacity: 0.6;
-    margin-top: 14px;
-  }
   .photo-strip{
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -376,22 +369,6 @@
     cursor: pointer;
     overflow: hidden;
   }
-  .photo-inner .hint-icon{
-    font-size: 1.6rem;
-    color: var(--rose);
-    opacity: 0.7;
-  }
-  .photo-inner .hint-text{
-    font-size: 0.7rem;
-    color: var(--rose-deep);
-    opacity: 0.75;
-    text-align: center;
-    padding: 0 10px;
-  }
-  .photo-inner.has-image .hint-icon,
-  .photo-inner.has-image .hint-text{
-    display: none;
-  }
   .photo-caption{
     position: absolute;
     bottom: 12px;
@@ -402,8 +379,6 @@
     font-size: 1.15rem;
     color: var(--rose-deep);
   }
-  .polaroid input[type="file"]{ display: none; }
-
   @media (max-width: 480px){
     header.hero{ padding: 60px 12px 30px; }
     .wrap{ padding: 0 14px 80px; }
