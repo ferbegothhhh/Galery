@@ -724,15 +724,17 @@
 
   /* ---------- closing polaroid ---------- */
   .closing-polaroid{
-    margin: 44px 0 10px;
+    min-height: 100vh;
+    margin-left: -250px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    align-items: center;
     max-width: none;
     width: 100%;
   }
   .final-polaroid{
-    width: 320px;
-    padding: 18px 18px 60px;
+    width: 480px;
+    padding: 24px 24px 80px;
     text-align: center;
   }
   .final-polaroid .photo-caption{
