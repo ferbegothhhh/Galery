@@ -70,6 +70,15 @@
   var photoCaptions = ["kita", "senyummu", "hari itu", "favoritku", "selalu", "kamu"];
   var rotations = [-6, 5, -3, 4, -4];
 
+  var photoStripPaths = [
+    "photos/photo%20stript/WhatsApp%20Image%202026-09-11%20at%2020.40.33.jpeg",
+    "photos/photo%20stript/WhatsApp%20Image%202026-09-11%20at%2020.40.38%20(1).jpeg",
+    "photos/photo%20stript/WhatsApp%20Image%202026-09-11%20at%2020.40.41%20(2).jpeg",
+    "photos/photo%20stript/WhatsApp%20Image%202026-09-11%20at%2020.40.41.jpeg",
+    "photos/photo%20stript/WhatsApp%20Image%202026-09-11%20at%2020.40.42%20(3).jpeg",
+    "photos/photo%20stript/WhatsApp%20Image%202026-09-11%20at%2020.40.42.jpeg"
+  ];
+
   var playlist = [
     { title: "Tough Luck", artist: "Laufey", url: "https://open.spotify.com/track/1GexRDFzRQpNkflfXgI2lM", cover: "https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02ef6809d9f73321fcd2e77b4b" },
     { title: "Castle in Hollywood", artist: "Laufey", url: "https://open.spotify.com/track/3zTnSPti5JjNsowJH4SS3u", cover: "https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028f68f6e65c1cfd36bb21561c" },
@@ -172,6 +181,11 @@
         '<span class="photo-caption">' + caption + '</span>' +
         '<input type="file" id="' + inputId + '" accept="image/*">' +
       '</label>';
+    if (photoStripPaths[i]){
+      var photoInner = polaroid.querySelector(".photo-inner");
+      photoInner.style.backgroundImage = "url(" + photoStripPaths[i] + ")";
+      photoInner.classList.add("has-image");
+    }
     photoStrip.appendChild(polaroid);
   });
 
@@ -193,22 +207,34 @@
   var letterPhotoStrip = document.getElementById("letterPhotoStrip");
 
   var letterPhotoPaths = [
-    "Art%20by%20me/Tak_berjudul98_1.png",
-    "Art%20by%20me/IMG_20251017_174207_622.jpg",
-    "Art%20by%20me/Tak_berjudul89_1.png",
-    "Art%20by%20me/IMG_20260905_133345_001.jpg",
-    "Art%20by%20me/Tak_berjudul78_1.png",
-    "Art%20by%20me/quality_restoration_20260905134242979.jpg",
-    "Art%20by%20me/Tak_berjudul55_2.png",
-    "Art%20by%20me/Untitled111_1.png",
-    "Art%20by%20me/Tak_berjudul19_2.png",
-    "Art%20by%20me/Untitled106.png",
-    "Art%20by%20me/Tak_berjudul97_1.png",
-    "Art%20by%20me/IMG_20260905_133520_701.jpg"
+    "photos/Art%20by%20me/Tak_berjudul98_1.png",
+    "photos/Art%20by%20me/IMG_20251017_174207_622.jpg",
+    "photos/Art%20by%20me/Tak_berjudul89_1.png",
+    "photos/Art%20by%20me/IMG_20260905_133345_001.jpg",
+    "photos/Art%20by%20me/Tak_berjudul78_1.png",
+    "photos/Art%20by%20me/quality_restoration_20260905134242979.jpg",
+    "photos/Art%20by%20me/Tak_berjudul55_2.png",
+    "photos/Art%20by%20me/Untitled111_1.png",
+    "photos/Art%20by%20me/Tak_berjudul19_2.png",
+    "photos/Art%20by%20me/Untitled106.png",
+    "photos/Art%20by%20me/Tak_berjudul97_1.png",
+    "photos/Art%20by%20me/IMG_20260905_133520_701.jpg",
+    "photos/Art%20by%20me/IMG_20260905_133424_671.jpg",
+    "photos/Art%20by%20me/quality_restoration_20260905134030512.jpg",
+    "photos/Art%20by%20me/Tak_berjudul32_3.png",
+    "photos/Art%20by%20me/Tak_berjudul37_1.png",
+    "photos/Art%20by%20me/Tak_berjudul38.png",
+    "photos/Art%20by%20me/Tak_berjudul52_2.png",
+    "photos/Art%20by%20me/Tak_berjudul56_1.png",
+    "photos/Art%20by%20me/Tak_berjudul85_3.png",
+    "photos/Art%20by%20me/Untitled116.png",
+    "photos/Art%20by%20me/Untitled130_1.png",
+    "photos/Art%20by%20me/Untitled133_2.png",
+    "photos/Art%20by%20me/Untitled137_1.png"
   ];
 
   if (letterPhotoStrip){
-    for (var l = 0; l < 12; l++){
+    for (var l = 0; l < 24; l++){
       var inputId = "letter-photo-" + l;
       var polaroid = document.createElement("div");
       polaroid.className = "polaroid";
@@ -244,7 +270,24 @@
 
   /* final polaroid flip card — 2 sisi, upload per sisi */
   var finalPolaroid = document.getElementById("finalPolaroid");
+
+  var closingPhotoPaths = [
+    "photos/closing%20palaloid/Tak_berjudul98_1.png",
+    "photos/closing%20palaloid/WhatsApp%20Image%202026-09-11%20at%2020.40.40%20(2).jpeg"
+  ];
+
   if (finalPolaroid){
+    var frontInner = finalPolaroid.querySelector(".final-front .photo-inner");
+    if (frontInner && closingPhotoPaths[0]){
+      frontInner.style.backgroundImage = "url(" + closingPhotoPaths[0] + ")";
+      frontInner.classList.add("has-image");
+    }
+    var backInner = finalPolaroid.querySelector(".final-back .photo-inner");
+    if (backInner && closingPhotoPaths[1]){
+      backInner.style.backgroundImage = "url(" + closingPhotoPaths[1] + ")";
+      backInner.classList.add("has-image");
+    }
+
     var finalFlipBusy = false;
     function openFinalPicker(face){
       var input = face.querySelector('input[type="file"]');
@@ -293,7 +336,26 @@
   ];
   var marqueeRotations = [-5, 4, -3, 5, -4, 3, -4, 5];
 
-  function buildMarquee(stripEl, captions, seedOffset){
+  var marqueePhotoPaths = [
+    "photos/marque/WhatsApp%20Image%202026-07-24%20at%2022.26.33.jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-06%20at%2013.08.50.jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.32.jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.33%20(1).jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.33.jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.34%20(1).jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.34.jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.35%20(1).jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.35%20(2).jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.35.jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.36%20(1).jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.36%20(2).jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.36%20(3).jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.36.jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.37%20(1).jpeg",
+    "photos/marque/WhatsApp%20Image%202026-09-11%20at%2020.40.37%20(2).jpeg"
+  ];
+
+  function buildMarquee(stripEl, captions, seedOffset, photoArr){
     captions.forEach(function(cap, i){
       var inputId = "marquee-" + stripEl.id + "-" + i + "-" + seedOffset;
       var rot = marqueeRotations[(i + seedOffset) % marqueeRotations.length];
@@ -310,6 +372,11 @@
           '<span class="photo-caption">' + cap + '</span>' +
           '<input type="file" id="' + inputId + '" accept="image/*">' +
         '</label>';
+      if (photoArr && photoArr[i]){
+        var photoInner = polaroid.querySelector(".photo-inner");
+        photoInner.style.backgroundImage = "url(" + photoArr[i] + ")";
+        photoInner.classList.add("has-image");
+      }
       stripEl.appendChild(polaroid);
     });
   }
@@ -318,11 +385,11 @@
   var marqueeLeft = document.getElementById("marqueeLeft");
 
   if (marqueeRight){
-    buildMarquee(marqueeRight, marqueeCaptions[0], 0);
+    buildMarquee(marqueeRight, marqueeCaptions[0], 0, marqueePhotoPaths.slice(0, 8));
     marqueeRight.innerHTML = marqueeRight.innerHTML + marqueeRight.innerHTML;
   }
   if (marqueeLeft){
-    buildMarquee(marqueeLeft, marqueeCaptions[1], 3);
+    buildMarquee(marqueeLeft, marqueeCaptions[1], 3, marqueePhotoPaths.slice(8, 16));
     marqueeLeft.innerHTML = marqueeLeft.innerHTML + marqueeLeft.innerHTML;
   }
 
